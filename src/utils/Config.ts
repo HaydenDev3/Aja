@@ -28,7 +28,7 @@ const config: Config = {
   port: process.env.PORT ?? 3000,
   discord: {
     token: process.env.BOT_TOKEN as string,
-    ownerIds: ["622903645268344835"],
+    ownerIds: ["622903645268344835"], /** @INFO - Replace with your ID // and other peoples ID(s) */
     messages: [
       "Coming Soon - aja.haydenf.cloud",
       "I am in development - Estiminated Release Date is 2nd or 16th of April.",

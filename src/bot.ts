@@ -4,7 +4,6 @@ import Log from "./utils/Log";
 import config from "./utils/Config";
 import EventsRegistery from "./services/events.service";
 import mongoose from "mongoose";
-import AntiCrashService from "./services/error.service";
 
 export const client: Client = Deps.add<Client>(
   Client,
@@ -20,7 +19,6 @@ export const client: Client = Deps.add<Client>(
 
 mongoose.connect(config.database.uri, config.database.options);
 
-Deps.get<AntiCrashService>(AntiCrashService).start();
 Deps.get<EventsRegistery>(EventsRegistery).init();
 
 client.login(config.discord.token);

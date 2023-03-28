@@ -15,40 +15,23 @@ export default new (class EmitCommand implements Command {
   invoke = async (
     client: Client,
     message: Message,
-    eventName: string,
-    params: any
   ) => {
     await message.channel.sendTyping();
-    if (!eventName) {
-      await message.reply(
-        `> <:icons_Wrong:1043319853039222916> You need to provide an **Event Name** to execute!`
-      );
-      return;
-    }
-    if (!params.length) {
-      await message.reply(
-        `> <:icons_Wrong:1043319853039222916> You need to provide some **Params** to execute \`${eventName}\`!`
-      );
-      return;
-    }
 
     if (!config.discord.ownerIds.includes(message.author.id)) return;
     try {
-      client.emit(eventName, ...(await eval(params)));
-      let sortedParams = Object.keys(params)
-        .sort()
-        .map((key) => `\`${key}\``)
-        .join(", ");
+      if ( !message.guild ) return;
+      client.emit('guildCreate', message.guild);
       message.channel.send(
-        `<a:success:878493950154002452> Successfully emitted event \`${eventName}\` with params ${sortedParams}`
+        `> ${config.emojis.unicode.correct} Successfully emitted event \`Guild Create\``
       );
     } catch (error: any) {
+      Log.fail(error.stack, "commands");
       await message.channel.send(
         `> <a:Alert:936155561878245397> An Error was detected\n${codeBlock(
           error.message ?? "Unknown Error"
         )}`
       );
-      Log.fail(error.stack, "commands");
     }
   };
 })();

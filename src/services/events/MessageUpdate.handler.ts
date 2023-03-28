@@ -51,7 +51,6 @@ export default new (class MessageCreateHandler implements IEvent {
           newMessage,
           ...this.commands.getCommandArgs(slicedContent)
         );
-        Log.command(command, newMessage.author);
       } else {
         await this.messageFiltering.init(newMessage);
       }

@@ -58,7 +58,7 @@ export default new (class GuildCreateHandler implements IEvent {
           { name: "Channels", value: guild.channels.cache.size, inline: true },
         ]);
       const ch = (await guild.client.channels.cache.get(
-        "1086484073800794274"
+        process.env!.GUILD_LOGS as string
       )) as TextChannel;
       await ch?.send({
         embeds: [embed],

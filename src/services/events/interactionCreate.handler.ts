@@ -59,7 +59,6 @@ export default new (class InteractionCreateHandler implements IEvent {
         }
 
         await command.invoke(this.client, interaction);
-        Log.command(command, interaction.user, true);
       } catch (err: any) {
         Log.fail(err.message, "commands");
       }
