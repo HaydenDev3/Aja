@@ -1,0 +1,14 @@
+{
+  "unicode": {
+    "correct": "<:icons_Correct:1043319634776047667>",
+    "wrong": "<:icons_Wrong:1043319853039222916>",
+    "reply": "<:reply:878577643300204565>",
+    "slashCommand": "<:slashCommandIcon:1086196240208891944>"
+  },
+  "id": {
+    "correct": "1043319634776047667",
+    "wrong": "1043319853039222916",
+    "reply": "878577643300204565",
+    "slashCommand": "1086196240208891944"
+  }
+}
