@@ -7,39 +7,110 @@
 
 <div>
     <h2>Security Features <span>( ~ More In Development ~ )</span></h2> 
-    <ol>
-        <li>
-            Anti-Spam <b>(Spam Shield)</b>
-        </li>
-        <li>
-            Anti-Raid <b>(Raid Shield)</b>
-        </li>
-    </ol>
+    <details>
+        <summary>Click to expand</summary>
+        <ol>
+            <li>
+                Anti-Spam <b>(Spam Shield)</b>
+            </li>
+            <li>
+                Anti-Raid <b>(Raid Shield)</b>
+            </li>
+        </ol>
+    </details>
 </div>
 
 <div>
-    <h2>Content Filtering</h2> 
-    <ol>
-        <li>
-            Message Filtering > Filter certain words using the Message Filtering module.
-        </li>
-        <li>
-            Nickname/Username Filtering > Same sort of thing with Message Filtering, however, its filtering Nicknames/Usernames.
-        </li>
-    </ol>
+    <h2>Content Filtering</h2>
+    <details>
+        <summary>Click to expand</summary> 
+        <ol>
+            <li>
+                Message Filtering > Filter certain words using the Message Filtering module.
+            </li>
+            <li>
+                Nickname/Username Filtering > Same sort of thing with Message Filtering, however, its filtering Nicknames/Usernames.
+            </li>
+        </ol>
+    </details>
 </div>
 
 <div>
     <h2>Logging</h2>
-    <ol>
-        <li>Log when a user joins:<br />You can customise the message with embeds and buttons (coming soon).</li>
-        <li>Log when a user leaves:<br />You can customise the message with embeds and buttons (coming soon).</li>
-    </ol>
+    <details>
+        <summary>Click to expand</summary>
+        <ol>
+            <li>Log when a user joins:<br />You can customise the message with embeds and buttons (coming soon).</li>
+            <li>Log when a user leaves:<br />You can customise the message with embeds and buttons (coming soon).</li>
+        </ol>
+    </details>
 </div>
 
 <div>
-    <h2>Onboarding</h2>
-    <ol>
-        <li>Onboard your members with a <b>warm welcome</b>.</li>
-    </ol>
+<h2>Onboarding</h2>
+    <details>
+        <summary>Click to expand</summary>
+        <ol>
+            <li>Onboard your members with a <b>warm welcome</b>.</li>
+        </ol>
+    </details>
+</div>
+
+<hr />
+
+<div>
+    <h1>Host your own <b>Aja</b> or contribute.</h1>
+    <details>
+        <summary>Click to expand</summary>
+        <ol>
+            <li>
+                <h1>Hosting Your Own Version:</h1>
+                <details>
+                    <summary>Click to expand</summary>
+                    <ol>
+                        <li>
+                            First, you need to install the packages/init a package.json:<br />
+                            <p>If you don't have a package.json:</p><br />
+                            <code>
+                                npm init -y
+                            </code><br />
+                            or yarn:<br />
+                            <code>
+                                yarn init -y
+                            </code>
+                            <br />
+                            then:<br/>
+                            <code>
+                                npm install
+                            </code>
+                            or yarn:<br/>
+                            <code>
+                                yarn add .
+                            </code>
+                        </li>
+                        <li>
+                            Create a .env File and paste the following code inside and get the variables required:<br>
+                            <code>
+                                BOT_TOKEN=Discord bot Token from https://discord.com/developers/applications<br />
+                                MONGOOSE_ATLAS=mongoURI from https://mongodb.com/<br />
+                                API_KEY=API KEY from https://openai.com/<br />
+                                CLIENT_ORGRANISATION=Organization Key from https://openai.com/
+                            </code>
+                        </li>
+                    </ol>
+                </details>
+            </li>
+            <li>
+                <h1>Contributing:</h1>
+                <details>
+                    <summary>Click to expand</summary>
+                    <ol>
+                        <li>
+                            Coming Soon
+                        </li>
+                    </ol>
+                </details>
+            </li>
+        </ol>
+    </details>
 </div>
