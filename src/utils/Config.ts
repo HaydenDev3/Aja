@@ -45,7 +45,7 @@ const config: Config = {
     ],
     callbackUrl: `http://localhost:3000/api/auth/callback`,
     clientID: "994930207918129182",
-    clientSecret: "EDGtiwH9wJG8uGvC8KeGMlY6e18Nk-IR",
+    clientSecret: process.env!.clientSecret as string,
   },
   api: {
     url: "http://localhost:1000/api",
