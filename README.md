@@ -6,7 +6,7 @@
 <b><h1>Features:</h1></b>
 
 <div>
-    <h2>Security Features <span>( ~ More In Development ~ )</span></h2> 
+    <h2>🛡️ Security Features <span>( ~ More In Development ~ )</span></h2> 
     <details>
         <summary>Click to expand</summary>
         <ol>
@@ -21,7 +21,7 @@
 </div>
 
 <div>
-    <h2>Content Filtering</h2>
+    <h2>🗨️ Content Filtering</h2>
     <details>
         <summary>Click to expand</summary> 
         <ol>
@@ -36,7 +36,7 @@
 </div>
 
 <div>
-    <h2>Logging</h2>
+    <h2>🪵 Logging</h2>
     <details>
         <summary>Click to expand</summary>
         <ol>
@@ -47,7 +47,7 @@
 </div>
 
 <div>
-<h2>Onboarding</h2>
+<h2>👋 Onboarding</h2>
     <details>
         <summary>Click to expand</summary>
         <ol>
@@ -59,7 +59,7 @@
 <hr />
 
 <div>
-    <h1>Host your own <b>Aja</b> or contribute.</h1>
+    <h1>📁 Host your own <b>Aja</b> or contribute.</h1>
     <details>
         <summary>Click to expand</summary>
         <ol>

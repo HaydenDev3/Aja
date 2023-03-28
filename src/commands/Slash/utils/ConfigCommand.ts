@@ -8,6 +8,7 @@ import {
   Colors,
   ComponentType,
   EmbedBuilder,
+  Message,
   SlashCommandBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
@@ -16,6 +17,8 @@ import { GuildSettings } from "../../../database/models/GuildSetting";
 import config from "../../../utils/Config";
 import Log from "../../../utils/Log";
 import SlashCommand from "../../SlashCommand";
+
+export var configMessage: Message;
 
 export default new (class ConfigCommand implements SlashCommand {
   data: SlashCommandBuilder = new SlashCommandBuilder()
@@ -37,12 +40,13 @@ export default new (class ConfigCommand implements SlashCommand {
       _id: interaction.guildId,
     });
 
-    const message = await interaction.followUp({
+    configMessage = await interaction.followUp({
       embeds: [embed],
+      ephemeral: false
     });
 
     if (!savedGuild)
-      return await message.edit({
+      return await configMessage.edit({
         content: `${config.emojis.unicode.wrong} Failed to load guild settings: Guild is not registered, please use ${config.emojis.unicode.slashCommand} \`/register\``,
         embeds: [],
       });
@@ -79,12 +83,12 @@ export default new (class ConfigCommand implements SlashCommand {
 
     try {
       setTimeout(async () => {
-        await message.edit({
+        await configMessage.edit({
           embeds: [embed],
           components: [
             new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
               new StringSelectMenuBuilder()
-                .setPlaceholder("Toggle Modules:")
+                .setPlaceholder("Configure Modules:")
                 .setCustomId("config")
                 .addOptions([
                   new StringSelectMenuOptionBuilder()
@@ -93,8 +97,8 @@ export default new (class ConfigCommand implements SlashCommand {
                     .setDescription("This module contains general stuff like prefix, etc.")
                     .setEmoji(
                       savedGuild.general.enabled
-                        ? config.emojis.unicode.on
-                        : config.emojis.unicode.off
+                        ? config.emojis.id.on
+                        : config.emojis.id.off
                     ),
                   new StringSelectMenuOptionBuilder()
                     .setLabel("Logging Module")
@@ -102,24 +106,24 @@ export default new (class ConfigCommand implements SlashCommand {
                     .setDescription("Do you want to log when a Member joins? or Leaves? this is the right module!")
                     .setEmoji(
                       savedGuild.logging.enabled
-                        ? config.emojis.unicode.on
-                        : config.emojis.unicode.off
+                        ? config.emojis.id.on
+                        : config.emojis.id.off
                     ),
                   new StringSelectMenuOptionBuilder()
                     .setLabel("Ticketing Module")
                     .setValue("ticketing")
                     .setEmoji(
                       savedGuild.ticketing.enabled
-                        ? config.emojis.unicode.on
-                        : config.emojis.unicode.off
+                        ? config.emojis.id.on
+                        : config.emojis.id.off
                     ),
                   new StringSelectMenuOptionBuilder()
                     .setLabel("Content Filtering")
                     .setValue("contentFiltering")
                     .setEmoji(
                       savedGuild.contentFiltering.enabled
-                        ? config.emojis.unicode.on
-                        : config.emojis.unicode.off
+                        ? config.emojis.id.on
+                        : config.emojis.id.off
                     ),
                   new StringSelectMenuOptionBuilder()
                     .setLabel("Shields Module")
@@ -129,8 +133,8 @@ export default new (class ConfigCommand implements SlashCommand {
                     .setValue("shields")
                     .setEmoji(
                       savedGuild.shields.enabled
-                        ? config.emojis.unicode.on
-                        : config.emojis.unicode.off
+                        ? config.emojis.id.on
+                        : config.emojis.id.off
                     ),
                 ])
             ),
@@ -141,10 +145,10 @@ export default new (class ConfigCommand implements SlashCommand {
                 .setCustomId("export_guild_data")
                 .setStyle(ButtonStyle.Secondary),
               new ButtonBuilder()
-                .setLabel("Edit Data")
-                .setEmoji(config.emojis.id.edit)
-                .setCustomId("edit_guild_data")
-                .setStyle(ButtonStyle.Primary)
+                .setLabel("Exit Menu")
+                .setEmoji('⚠️')
+                .setCustomId("exit")
+                .setStyle(ButtonStyle.Secondary)
             ),
           ],
         });

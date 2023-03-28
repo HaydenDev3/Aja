@@ -25,7 +25,14 @@
     "discordpartner": "<:icons_discordpartner:861852633027182612>",
     "HSBravey": "<:icons_HSbravery:1090109250694545439>",
     "earlysupporter": "<:icons_earlysupporter:1090109233506299965>",
-    "HSbrilliance": "<:icons_HSbrilliance:1090109217408553063>"
+    "HSbrilliance": "<:icons_HSbrilliance:1090109217408553063>",
+    "person": "<:icons_Person:1043319836031336528>",
+    "textChannel": "<:icons_channel:1090144499826708560>",
+    "channelFollowed": "<:icons_channelfollowed:1090144515580510291>",
+    "exclamination": "<:icons_exclamation:1090161038533595157>",
+    "generalinfo": "<:icons_generalinfo:1090161005088219148>",
+    "support": "<:icons_headphone:1090161022536536104>",
+    "shine": "<:icons_shine3:1090144532399652896>"
   },
   "id": {
     "reply": "878577643300204565",
@@ -53,6 +60,13 @@
     "discordpartner": ":861852633027182612",
     "HSBravey": "1090109250694545439",
     "earlysupporter": "1090109233506299965",
-    "HSbrilliance": "1090109217408553063"
+    "HSbrilliance": "1090109217408553063",
+    "person": "1043319836031336528",
+    "textChannel": "1090144499826708560",
+    "channelFollowed": "1090144515580510291",
+    "exclamination": "1090161038533595157",
+    "generalinfo": "1090161005088219148",
+    "support": "1090161022536536104",
+    "shine": "1090144532399652896"
   }
 }

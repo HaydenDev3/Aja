@@ -6,6 +6,7 @@ import {
   ButtonStyle,
   Client,
   ClientEvents,
+  Colors,
   EmbedBuilder,
   Guild,
   TextChannel,
@@ -22,77 +23,86 @@ export default new (class GuildCreateHandler implements IEvent {
   constructor(private client: Client = Deps.get<Client>(Client)) {}
 
   invoke = async (guild: Guild) => {
-    for (const id of config.discord.ownerIds) {
-      let owner = this.client.users.cache.get(id);
+      if ( !guild ) return;
 
       const embed = new EmbedBuilder()
         .setTitle(`New Guild: ${guild.name}`)
-        .setColor("#008000")
+        .setColor(Colors.Green)
         .setDescription(
           `I've been added to a new guild: ${guild.name} (${guild.id}).`
         )
         .addFields([
           {
             name: "Owner",
-            value:
-              guild.members.cache.get(guild.ownerId)?.user.tag || "Unknown",
+            value: `> ${config.emojis.unicode.person} ${guild.members.cache.get(guild.ownerId)?.user.tag}` || "Unknown",
             inline: true,
           },
-          { name: "Members", value: guild.memberCount, inline: true },
+          { 
+            name: "Members", 
+            value: `> ${config.emojis.unicode.person} ${guild.memberCount}`, 
+            inline: true 
+          },
           {
             name: "Created At",
-            value: guild.createdAt.toLocaleDateString(),
-            inline: true,
-          },
-          {
-            name: "Premium Progressed Bar",
-            value: guild.premiumProgressBarEnabled as any,
+            value: `${guild.createdAt.toLocaleDateString()}`,
             inline: true,
           },
           {
             name: "Verification Level",
-            value: guild.verificationLevel.toString().toUpperCase(),
+            value: `> ${config.emojis.unicode.vip} ${guild.verificationLevel.toString().toUpperCase()}`,
             inline: true,
           },
-          { name: "Roles", value: guild.roles.cache.size, inline: true },
-          { name: "Channels", value: guild.channels.cache.size, inline: true },
+          { 
+            name: "Roles", 
+            value: `> ${config.emojis.unicode.vip} ${guild.roles.cache.size}`, 
+            inline: true 
+          },
+          { 
+            name: "Channels", 
+            value: `> ${config.emojis.unicode.textChannel} ${guild.channels.cache.size}`, 
+            inline: true 
+          },
         ]);
-      const ch = (await guild.client.channels.cache.get(
-        process.env!.GUILD_LOGS as string
+        
+      const ch = (this.client.channels.cache.get(
+        process.env.GUILD_LOGS as string
       )) as TextChannel;
-      await ch?.send({
-        embeds: [embed],
-        components: [],
-      });
-
-      const actionRow = new ActionRowBuilder().addComponents(
+      const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId("leave_guild")
           .setLabel("Leave Guild")
+          .setEmoji(config.emojis.id.wrong)
           .setStyle(ButtonStyle.Danger),
         new ButtonBuilder()
           .setCustomId("delete_guild_data")
           .setLabel("Delete Guild Data")
+          .setEmoji(config.emojis.id.wrong)
           .setStyle(ButtonStyle.Danger),
         new ButtonBuilder()
           .setCustomId("create_guild_data")
           .setLabel("Create Guild Data")
+          .setEmoji(config.emojis.id.correct)
           .setStyle(ButtonStyle.Success),
         new ButtonBuilder()
           .setCustomId("export_guild_data")
           .setLabel("Export Guild Data")
-          .setStyle(ButtonStyle.Primary)
+          .setEmoji(config.emojis.id.files)
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("exit")
+          .setLabel("Exit Menu")
+          .setEmoji(config.emojis.id.wrong)
+          .setStyle(ButtonStyle.Primary),
       );
 
-      const dmChannel = await owner!.createDM(true);
-      const message = await dmChannel?.send({
+      const message = await ch?.send({
         embeds: [embed],
-        components: [actionRow as any],
+        components: [actionRow],
       });
 
       const filter = (interaction: any) =>
         config.discord.ownerIds.includes(interaction.user.id);
-      const collector = await dmChannel?.createMessageComponentCollector({
+      const collector = message?.createMessageComponentCollector({
         filter,
         time: 60000,
       });
@@ -102,13 +112,13 @@ export default new (class GuildCreateHandler implements IEvent {
 
         if (interaction.customId === "leave_guild") {
           await guild.leave();
-          await interaction.reply("Left the guild.");
+          await interaction.followUp("Left the guild.");
         } else if (interaction.customId === "delete_guild_data") {
           if (!savedGuild) {
-            await interaction.reply(`Guild doesn't have any data`);
+            await interaction.followUp(`Guild doesn't have any data`);
           } else {
             await GuildSettings.deleteOne({ _id: guild.id });
-            await interaction.reply("Deleted guild data.");
+            await interaction.followUp("Deleted guild data.");
             return;
           }
         } else if (interaction.customId === "create_guild_data") {
@@ -116,19 +126,43 @@ export default new (class GuildCreateHandler implements IEvent {
             savedGuild = new GuildSettings({ _id: guild.id });
             await savedGuild.save();
           } else savedGuild.toJSON();
-          interaction.reply("Created guild data.");
+          await interaction.followUp({ content: "Created guild data.", ephemeral: true });
         } else if (interaction.customId === "export_guild_data") {
-          savedGuild = await GuildSettings.findOne({ guildId: guild.id });
+          savedGuild = await GuildSettings.findOne({ _id: guild.id });
+          if ( !savedGuild ) {
+            await interaction.followUp({
+              content: `${config.emojis.unicode.wrong} Failed to load guild settings: Guild is not registered, please use ${config.emojis.unicode.slashCommand} \`/register\``,
+              embeds: [],
+            });
+            return;
+          };
+          
           const data = savedGuild?.toJSON();
-          const jsonData = JSON.stringify(data, null, 2);
+          const jsonData = JSON.stringify(data);
 
           const attachment = new AttachmentBuilder(Buffer.from(jsonData), {
             name: `${guild.id}.json`,
           });
 
-          interaction.reply({
+          await interaction.followUp({
             files: [attachment],
             content: "Here is the guild data.",
+          });
+        } else if (interaction.customId === "exit") {
+          savedGuild = await GuildSettings.findOne({ _id: guild.id });
+          if ( !savedGuild ) {
+            await interaction.followUp({
+              content: `${config.emojis.unicode.wrong} Failed to load guild settings: Guild is not registered, please use ${config.emojis.unicode.slashCommand} \`/register\``,
+              embeds: [],
+            });
+            return;
+          };
+
+          await savedGuild.save();
+          await message.edit({
+            content: `${config.emojis.unicode.correct} Successfully exited the menu & Saved data.`,
+            embeds: [],
+            components: []
           });
         }
       });
@@ -136,6 +170,5 @@ export default new (class GuildCreateHandler implements IEvent {
       collector.on("end", async () => {
         await message.edit({ components: [] });
       });
-    }
   };
 })();
