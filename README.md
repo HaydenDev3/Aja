@@ -91,6 +91,7 @@
                         <li>
                             Create a .env File and paste the following code inside and get the variables required:<br>
                             <code>
+                                CLIENT_SECRET=Discord bot Client Secret from https://discord.com/developers/applications/[BOTID]/oauth2/general<br />
                                 BOT_TOKEN=Discord bot Token from https://discord.com/developers/applications<br />
                                 MONGOOSE_ATLAS=mongoURI from https://mongodb.com/<br />
                                 API_KEY=API KEY from https://openai.com/<br />
