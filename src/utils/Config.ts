@@ -1,3 +1,4 @@
+import { Activity, ActivityType, PresenceData } from "discord.js";
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import emojisData from "./emojis.json";
@@ -7,7 +8,7 @@ export interface Config {
   discord: {
     token: string;
     ownerIds: string[];
-    messages: string[]; // For the presence revolver... ;-;
+    messages: PresenceData | any; // For the presence revolver... ;-;
     clientID: string;
     clientSecret: string;
     callbackUrl: string;
@@ -28,21 +29,72 @@ const config: Config = {
   port: process.env.PORT ?? 3000,
   discord: {
     token: process.env.BOT_TOKEN as string,
-    ownerIds: ["622903645268344835"], /** @INFO - Replace with your ID // and other peoples ID(s) */
-    messages: [
-      "Coming Soon - aja.haydenf.cloud",
-      "I am in development - Estiminated Release Date is 2nd or 16th of April.",
-      "“The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.” - Helen Keller",
-      "“It does not matter how slowly you go as long as you do not stop.” - Confucius",
-      "“The only way to do great work is to love what you do.” - Steve Jobs",
-      "“The only limit to our realization of tomorrow will be our doubts of today.” - Franklin D. Roosevelt",
-      "“Believe you can and you're halfway there.” - Theodore Roosevelt",
-      "“Happiness is not something ready made. It comes from your own actions.” - Dalai Lama",
-      "“Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.” - Albert Schweitzer",
-      "“The best revenge is massive success.” - Frank Sinatra",
-      "“Success is not final, failure is not fatal: It is the courage to continue that counts.” - Winston Churchill",
-      "“I can't change the direction of the wind, but I can adjust my sails to always reach my destination.” - Jimmy Dean",
-    ],
+    ownerIds: [
+      "622903645268344835",
+    ] /** @INFO - Replace with your ID // and other peoples ID(s) */,
+    messages: {
+      activities: [
+        {
+          name: "Coming Soon - aja.haydenf.cloud",
+          type: ActivityType.Playing,
+        },
+        {
+          name: "I am in development - Estiminated Release Date is 2nd or 16th of April.",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud/",
+        },
+        {
+          name: "“The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.” - Helen Keller",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“It does not matter how slowly you go as long as you do not stop.” - Confucius",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“The only way to do great work is to love what you do.” - Steve Jobs",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“The only limit to our realization of tomorrow will be our doubts of today.” - Franklin D. Roosevelt",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“Happiness is not something ready made. It comes from your own actions.” - Dalai Lama",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“Believe you can and you're halfway there.” - Theodore Roosevelt",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“Success is not final, failure is not fatal: It is the courage to continue that counts.” - Winston Churchill",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“The best revenge is massive success.” - Frank Sinatra",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“I can't change the direction of the wind, but I can adjust my sails to always reach my destination.” - Jimmy Dean",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+        {
+          name: "“Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.” - Albert Schweitzer",
+          type: ActivityType.Streaming,
+          url: "https://aja.haydenf.cloud",
+        },
+      ],
+    },
     callbackUrl: `http://localhost:3000/api/auth/callback`,
     clientID: "994930207918129182",
     clientSecret: process.env!.clientSecret as string,

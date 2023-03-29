@@ -14,17 +14,17 @@ import connectMongoDBSession from "connect-mongodb-session";
 
 const app = express();
 
-export class API { 
+export class API {
   private MongoDBStore = connectMongoDBSession(session);
 
-  constructor () {
-      app.use(bodyParser.json());
-      app.use(bodyParser.urlencoded({ extended: true }));
+  constructor() {
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
-      app.use("/api", ApiRoutes);
+    app.use("/api", ApiRoutes);
   }
 
-  public init () {
+  public init() {
     app.use(
       session({
         secret: config.discord.clientSecret,

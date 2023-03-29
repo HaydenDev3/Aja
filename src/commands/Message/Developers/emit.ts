@@ -12,16 +12,13 @@ export default new (class EmitCommand implements Command {
     cooldown: 5000,
   };
 
-  invoke = async (
-    client: Client,
-    message: Message,
-  ) => {
+  invoke = async (client: Client, message: Message) => {
     await message.channel.sendTyping();
 
     if (!config.discord.ownerIds.includes(message.author.id)) return;
     try {
-      if ( !message.guild ) return;
-      client.emit('guildCreate', message.guild);
+      if (!message.guild) return;
+      client.emit("guildCreate", message.guild);
       message.channel.send(
         `> ${config.emojis.unicode.correct} Successfully emitted event \`Guild Create\``
       );

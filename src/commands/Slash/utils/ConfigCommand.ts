@@ -42,7 +42,7 @@ export default new (class ConfigCommand implements SlashCommand {
 
     configMessage = await interaction.followUp({
       embeds: [embed],
-      ephemeral: false
+      ephemeral: false,
     });
 
     if (!savedGuild)
@@ -94,7 +94,9 @@ export default new (class ConfigCommand implements SlashCommand {
                   new StringSelectMenuOptionBuilder()
                     .setLabel("general")
                     .setValue("general")
-                    .setDescription("This module contains general stuff like prefix, etc.")
+                    .setDescription(
+                      "This module contains general stuff like prefix, etc."
+                    )
                     .setEmoji(
                       savedGuild.general.enabled
                         ? config.emojis.id.on
@@ -103,7 +105,9 @@ export default new (class ConfigCommand implements SlashCommand {
                   new StringSelectMenuOptionBuilder()
                     .setLabel("Logging Module")
                     .setValue("logging")
-                    .setDescription("Do you want to log when a Member joins? or Leaves? this is the right module!")
+                    .setDescription(
+                      "Do you want to log when a Member joins? or Leaves? this is the right module!"
+                    )
                     .setEmoji(
                       savedGuild.logging.enabled
                         ? config.emojis.id.on
@@ -146,7 +150,7 @@ export default new (class ConfigCommand implements SlashCommand {
                 .setStyle(ButtonStyle.Secondary),
               new ButtonBuilder()
                 .setLabel("Exit Menu")
-                .setEmoji('⚠️')
+                .setEmoji("⚠️")
                 .setCustomId("exit")
                 .setStyle(ButtonStyle.Secondary)
             ),

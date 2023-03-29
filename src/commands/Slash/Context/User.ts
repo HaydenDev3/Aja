@@ -24,8 +24,8 @@ const badges = {
   Hypesquad: config.emojis.unicode.hypesquad,
   HypeSquadOnlineHouse2: config.emojis.unicode.HSbrilliance,
   HypeSquadOnlineHouse3: config.emojis.unicode.HSBravey,
-  PremiumEarlySupporter: config.emojis.unicode.earlysupporter
-}
+  PremiumEarlySupporter: config.emojis.unicode.earlysupporter,
+};
 
 export default new (class UserContextMenuCommand implements SlashCommand {
   data: ContextMenuCommandBuilder = new ContextMenuCommandBuilder()
@@ -42,7 +42,7 @@ export default new (class UserContextMenuCommand implements SlashCommand {
     const roleNames = member.roles?.cache
       .filter((role: Role) => role.id !== interaction.guild?.id)
       .map((role: Role) => role.name)
-      .join(', ');
+      .join(", ");
 
     const embeds = [
       new EmbedBuilder()
@@ -61,16 +61,16 @@ export default new (class UserContextMenuCommand implements SlashCommand {
           }
         )
         .setThumbnail(user.displayAvatarURL({ forceStatic: false })),
-        new EmbedBuilder()
+      new EmbedBuilder()
         .setColor(Colors.Blurple)
         .setTitle(`User Information for ${user.tag} (2)`)
-        .addFields(
-          {
-            name: 'Member Roles',
-            value: roleNames || 'None',
-          }
-        )
-        .setThumbnail(user.displayAvatarURL({ forceStatic: false, size: 2048 }))
+        .addFields({
+          name: "Member Roles",
+          value: roleNames || "None",
+        })
+        .setThumbnail(
+          user.displayAvatarURL({ forceStatic: false, size: 2048 })
+        ),
     ];
 
     if (user.bot) {
@@ -83,16 +83,20 @@ export default new (class UserContextMenuCommand implements SlashCommand {
 
     if (user.flags) {
       const flags = user.flags.toArray();
-      const flagString = flags.map(flag => `> ${badges[flag]} **${flag
-          .replace('HypeSquadOnlineHouse2', "Brilliance")
-          .replace("HypeSquadOnlineHouse3", "Bravey")
-          .replace('VerifiedDeveloper', "Bot Developer")
-          .replace("ActiveDeveloper", "Active Developer")
-      }**`).join("\n");
+      const flagString = flags
+        .map(
+          (flag) =>
+            `> ${badges[flag]} **${flag
+              .replace("HypeSquadOnlineHouse2", "Brilliance")
+              .replace("HypeSquadOnlineHouse3", "Bravey")
+              .replace("VerifiedDeveloper", "Bot Developer")
+              .replace("ActiveDeveloper", "Active Developer")}**`
+        )
+        .join("\n");
       embeds[0].data.fields?.push({
         name: "Badges",
         value: flagString || "None",
-        inline: false,  
+        inline: false,
       });
     }
 
@@ -115,13 +119,12 @@ export default new (class UserContextMenuCommand implements SlashCommand {
       .setCustomId("next")
       .setStyle(ButtonStyle.Primary)
       .setLabel("Next");
-      
-      
+
     const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        previousButton,
-        nextButton
+      previousButton,
+      nextButton
     );
-        
+
     const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("like_button")

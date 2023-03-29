@@ -31,20 +31,18 @@ export default new (class ReadyHandler implements IEvent {
     new TicketingService();
 
     await this.SlashcommandService.rest.put(
-      Routes.applicationCommands(
-        bot.user?.id as string
-      ),
+      Routes.applicationCommands(bot.user?.id as string),
       {
         body: this.SlashcommandService.appCmds,
       }
     );
 
     setInterval(() => {
-      const status =
-        config.discord.messages[
-          Math.floor(Math.random() * config.discord.messages.length)
+      const { name, type } =
+        config.discord.messages.activities[
+          Math.floor(Math.random() * config.discord.messages.activities!.length)
         ];
-      bot.user?.setActivity(status, { type: ActivityType.Playing });
+      bot.user?.setActivity(name, { type });
     }, 30000);
   };
 })();

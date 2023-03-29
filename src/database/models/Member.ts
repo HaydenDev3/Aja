@@ -10,10 +10,10 @@ export default mongoose.model<MemberDocument>(
   "member",
   new Schema({
     likes: {
-        type: [String],
-        required: true,
-        unique: true,
-        default: [],
+      type: [String],
+      required: true,
+      unique: true,
+      default: [],
     },
     votes: {
       type: Number,

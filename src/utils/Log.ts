@@ -10,7 +10,6 @@ export default class Log {
   }
 
   static info(message: string, src?: string) {
-
     return console.log(
       String(
         `[${this.formatTime(new Date())}] LAUNCHER [${this.getSource(
