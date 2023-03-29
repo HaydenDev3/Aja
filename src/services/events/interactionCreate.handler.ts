@@ -34,17 +34,12 @@ export default new (class InteractionCreateHandler implements IEvent {
   ) => {
     if (interaction.isChatInputCommand()) {
       try {
-        if (!interaction.isChatInputCommand()) return;
-        if (!interaction.deferred)
-          await interaction.deferReply({ ephemeral: false }).catch(() => {});
-
-        let savedGuild = await GuildSettings.findOne({
-          _id: interaction.guild?.id,
-        });
-
         let command = this.slashCommandService.slashCommands.get(
           interaction.commandName
         );
+
+        if (!interaction.deferred)
+          await interaction.deferReply({ ephemeral: false }).catch(() => {});
         if (!command) {
           await interaction.followUp({
             embeds: [

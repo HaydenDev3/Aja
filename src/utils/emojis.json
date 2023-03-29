@@ -29,10 +29,12 @@
     "person": "<:icons_Person:1043319836031336528>",
     "textChannel": "<:icons_channel:1090144499826708560>",
     "channelFollowed": "<:icons_channelfollowed:1090144515580510291>",
-    "exclamination": "<:icons_exclamation:1090161038533595157>",
+    "warning": "<:icons_exclamation:1090161038533595157>",
     "generalinfo": "<:icons_generalinfo:1090161005088219148>",
     "support": "<:icons_headphone:1090161022536536104>",
-    "shine": "<:icons_shine3:1090144532399652896>"
+    "shine": "<:icons_shine3:1090144532399652896>",
+    "leftarrow": "<:icons_leftarrow:1090571649637695539>",
+    "rightarrow": "<:icons_rightarrow:1090571632772403241>"
   },
   "id": {
     "reply": "878577643300204565",
@@ -64,9 +66,11 @@
     "person": "1043319836031336528",
     "textChannel": "1090144499826708560",
     "channelFollowed": "1090144515580510291",
-    "exclamination": "1090161038533595157",
+    "warning": "1090161038533595157",
     "generalinfo": "1090161005088219148",
     "support": "1090161022536536104",
-    "shine": "1090144532399652896"
+    "shine": "1090144532399652896",
+    "leftarrow": "1090571649637695539",
+    "rightarrow": "1090571632772403241"
   }
 }
