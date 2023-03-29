@@ -23,5 +23,5 @@ Deps.get<EventsRegistery>(EventsRegistery).init();
 
 client.login(config.discord.token);
 
-/** @INFO - Opening server */
-// import "./api/app";
+/** @INFO - Opening express server */
+// Now imported to ready.handler.ts -> Dashboard is coming soon.

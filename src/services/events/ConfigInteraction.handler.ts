@@ -56,13 +56,17 @@ export default new (class ConfigInteractionHandler implements IEvent {
         }
       }
     } else if (interaction.isStringSelectMenu() ) {
+      const [value] = interaction.values as any;
+      var ToggleModule: string = "";
+
+      if ( value.includes('toggle') ) ToggleModule = value.split("-")[1];
+      
       switch (interaction.customId) {
         case "config" : {
-          const [value] = interaction.values as any;
-           
+
           switch (value) {
-            case "toggle": {
-              const module = savedGuild[value] as any;
+            case `toggle-${ToggleModule}`: {
+              const module = savedGuild[ToggleModule] as any;
     
               module!.enabled = !module.enabled;
               await savedGuild.save();
