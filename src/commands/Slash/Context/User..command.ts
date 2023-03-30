@@ -22,8 +22,8 @@ const badges = {
   Partner: config.emojis.unicode.discordpartner,
   staff: config.emojis.unicode.discordstaff,
   Hypesquad: config.emojis.unicode.hypesquad,
-  HypeSquadOnlineHouse2: config.emojis.unicode.HSbrilliance,
-  HypeSquadOnlineHouse3: config.emojis.unicode.HSBravey,
+  HypeSquadOnlineHouse2: config.emojis.unicode.HSBrilliance, /** @INFO - Brilliance HypeSquad House */
+  HypeSquadOnlineHouse3: config.emojis.unicode.HSBravery, /** @INFO - Braver HypeSquad House */
   PremiumEarlySupporter: config.emojis.unicode.earlysupporter,
 };
 
@@ -87,8 +87,8 @@ export default new (class UserContextMenuCommand implements SlashCommand {
         .map(
           (flag) =>
             `> ${badges[flag]} **${flag
-              .replace("HypeSquadOnlineHouse2", "Brilliance")
-              .replace("HypeSquadOnlineHouse3", "Bravey")
+              .replace("HypeSquadOnlineHouse2", "HypeSquad Brilliance")
+              .replace("HypeSquadOnlineHouse3", "HypeSquad Bravey")
               .replace("VerifiedDeveloper", "Bot Developer")
               .replace("ActiveDeveloper", "Active Developer")}**`
         )

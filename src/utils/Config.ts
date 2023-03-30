@@ -8,6 +8,7 @@ export interface Config {
   discord: {
     token: string;
     ownerIds: string[];
+    supportServerURL: string; /** @INFO - Replace with your Bot(s) discord support server URL */
     messages: PresenceData | any; // For the presence revolver... ;-;
     clientID: string;
     clientSecret: string;
@@ -29,6 +30,7 @@ const config: Config = {
   port: process.env.PORT ?? 3000,
   discord: {
     token: process.env.BOT_TOKEN as string,
+    supportServerURL: 'https://discord.gg/xhRjfchkHS',
     ownerIds: [
       "622903645268344835",
     ] /** @INFO - Replace with your ID // and other peoples ID(s) */,
