@@ -6,11 +6,8 @@ import {
   Colors,
   ContextMenuCommandInteraction,
   EmbedBuilder,
-  Routes,
 } from "discord.js";
-import MessageCommandService from "../../commands/Commands.service";
 import SlashCommandService from "../../commands/SlashCommands.service";
-import { GuildSettings } from "../../database/models/GuildSetting";
 import Deps from "../../utils/Deps";
 import Log from "../../utils/Log";
 import { EventType, IEvent } from "../events.service";

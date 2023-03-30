@@ -3,6 +3,11 @@
 <h1 style='text-align: center;'>Aja Discord Bot</h1>
 <p style="text-align: center;">Aja is a cutting-edge ultimate security/utility Discord bot that should replace <b>MEE6</b></p>
 
+<div>
+    <h2>Is there going to be a Dashboard</h2> 
+    <p>Yes, there will be sooner or later.</p>
+</div>
+
 <b><h1>Features:</h1></b>
 
 <div>

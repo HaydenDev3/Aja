@@ -58,10 +58,31 @@ export default new (class ConfigCommand implements SlashCommand {
         .setCustomId("exit")
         .setStyle(ButtonStyle.Secondary)
       ),
+      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+        new StringSelectMenuBuilder()
+          .setCustomId("config")
+          .setPlaceholder(`Select something you want to configure below`)
+          .addOptions(
+            [
+              new StringSelectMenuOptionBuilder()
+                .setLabel(`Prefix`)
+                .setValue("prefix")
+                .setDescription("Edit the guilds prefix")
+                .setEmoji(config.emojis.id.generalinfo)
+                .setDefault(true),
+              new StringSelectMenuOptionBuilder()
+                .setLabel(`Hold Role`)
+                .setValue("holdRole")
+                .setEmoji(config.emojis.id.spark)
+                .setDescription("Edit the guilds hold role (security")
+                .setDefault(false)
+            ]
+          )
+      ),
       new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setStyle(ButtonStyle.Primary)
-          .setLabel(`Previos`)
+          .setLabel(`Previous`)
           .setDisabled(false)
           .setCustomId("previous")
           .setEmoji(config.emojis.id.leftarrow),
@@ -95,148 +116,152 @@ export default new (class ConfigCommand implements SlashCommand {
       });
       
       var embeds: EmbedBuilder[] = [
-      new EmbedBuilder()
-      .setThumbnail(
-        "https://cdn.discordapp.com/emojis/866599434098835486.webp?size=96&quality=lossless"
-      )
-      .setTitle(`General Module Settings`)
-      .setDescription(
-        `> ***START EDITING THE GENERAL MODULE BY SELECTING SOMETHING BELOW*** ${
-          config.emojis.unicode.shine
-        }\n\n> ${
-          savedGuild.general.enabled
-          ? config.emojis.unicode.on
-          : config.emojis.unicode.off
-        } Toggle\n> ${config.emojis.unicode.replycontinue} \`${
-        savedGuild.general.prefix
-      }\` Prefix\n> ${config.emojis.unicode.reply} \`${
-        interaction.guild?.roles.cache.get(
-          savedGuild.general.holdRoleId as string
-          ) || "None"
-        }\` Hold Role`
+        new EmbedBuilder().setTitle("Your not supposed to see this"),
+        new EmbedBuilder()
+        .setThumbnail(
+          "https://cdn.discordapp.com/emojis/866599434098835486.webp?size=96&quality=lossless"
         )
-        .setColor(Colors.Blurple),
-      new EmbedBuilder()
-      .setThumbnail(
-        "https://cdn.discordapp.com/emojis/1090144515580510291.webp?size=240&quality=lossless"
-      )
-      .setTitle(`Logging Module Settings`)
-
-      .setDescription(
-        `> ***START EDITING THE LOGGING MODULE BY SELECTING SOMETHING BELOW*** ${
+        .setTitle(`General Module Settings`)
+        .setDescription(
+          `> ***START EDITING THE GENERAL MODULE BY SELECTING SOMETHING BELOW*** ${
+            config.emojis.unicode.shine
+          }\n\n> ${
+            savedGuild.general.enabled
+            ? config.emojis.unicode.on
+            : config.emojis.unicode.off
+          } Toggle\n> ${config.emojis.unicode.generalinfo} \`${
+          savedGuild.general.prefix
+        }\` Prefix\n> ${
           config.emojis.unicode.shine
-        }\n\n> ${
-          config.emojis.unicode.textChannel 
-        } ${
-          interaction.guild?.channels.cache.get(savedGuild.logging.channel)?.name || "No Logging Channel"
-        }\n> ${
-          savedGuild.logging.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Toggle\n> ${
-          savedGuild.logging.memberRiskLogging.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Member Risk Logging\n> ${
-          savedGuild.logging.welcoming.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Welcoming\n> ${
-          savedGuild.logging.leaving.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Leaving`
-        )
-      .setColor(Colors.Blurple),
-      new EmbedBuilder()
-      .setThumbnail(
-        "https://cdn.discordapp.com/emojis/860133545884123136.webp?size=240&quality=lossless"
-      )
-      .setTitle(`Shields Module Settings`)
-      .setDescription(
-        `> ***START EDITING THE SHIELDS MODULE BY SELECTING SOMETHING BELOW*** ${
-          config.emojis.unicode.shine
-        }\n\n> ${
-          config.emojis.unicode.textChannel 
-        } ${
-          interaction.guild?.channels.cache.get(savedGuild.shields.channel)?.name || "No Logging Channel"
-        }\n> ${
-          savedGuild.shields.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Toggle\n> ${
-          savedGuild.shields.raidShield.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Raid Protection\n> ${
-          savedGuild.shields.spamShield.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Spam Protection`
-        )
-      .setColor(Colors.Blurple),
-      new EmbedBuilder()
-      .setThumbnail(
-        "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
-      )
-      .setTitle("Content Filtering Settings")
-      .setDescription(
-        `> ***START EDITING THE CONTENT FILTERING MODULE BY SELECTING SOMETHING BELOW*** ${
-          config.emojis.unicode.shine
-        }\n\n> ${
-          config.emojis.unicode.textChannel 
-        } ${
-          interaction.guild?.channels.cache.get(savedGuild.contentFiltering.channel)?.name || "No Logging Channel"
-        }\n> ${
-          savedGuild.contentFiltering.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Toggle\n> ${
-          savedGuild.contentFiltering.nicknameFiltering.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Nickname Filtering Filtering\n> ${
-          savedGuild.contentFiltering.messageFiltering.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Message Filtering`
-        )
-      .setColor(Colors.Blurple),
-      new EmbedBuilder()
-      .setThumbnail(
-        "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
-      )
-      .setTitle("Ticketing Settings")
-      .setDescription(
-        `> ***START EDITING THE TICKETING MODULE BY SELECTING SOMETHING BELOW*** ${
-          config.emojis.unicode.shine
-        }\n\n> ${
-          savedGuild.ticketing.enabled ?
-            config.emojis.unicode.on :
-            config.emojis.unicode.off 
-        } Toggle\n> ${
-          config.emojis.unicode.textChannel 
-        } ${
-          interaction.guild?.channels.cache.get(savedGuild.ticketing.transcriptChannel)?.name || "No Transcript Channel"
-        }\n> ${config.emojis.unicode.support} \`${
-          savedGuild.ticketing
-            .supportRoles
-            .length
-        }\` Support Roles\n> ${
-          config.emojis.unicode.generalinfo
         } \`${
-          savedGuild.ticketing?.tickets.size || 0
-        }\` Active Tickets`
+          interaction.guild?.roles.cache.get(
+            savedGuild.general.holdRoleId as string
+            ) || "None"
+          }\` Hold Role (Security)`
+          )
+          .setColor(Colors.Blurple),
+        new EmbedBuilder()
+        .setThumbnail(
+          "https://cdn.discordapp.com/emojis/1090144515580510291.webp?size=240&quality=lossless"
         )
-      .setColor(Colors.Blurple),
+        .setTitle(`Logging Module Settings`)
+
+        .setDescription(
+          `> ***START EDITING THE LOGGING MODULE BY SELECTING SOMETHING BELOW*** ${
+            config.emojis.unicode.shine
+          }\n\n> ${
+            config.emojis.unicode.textChannel 
+          } ${
+            interaction.guild?.channels.cache.get(savedGuild.logging.channel)?.name || "No Logging Channel"
+          }\n> ${
+            savedGuild.logging.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Toggle\n> ${
+            savedGuild.logging.memberRiskLogging.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Member Risk Logging\n> ${
+            savedGuild.logging.welcoming.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Welcoming\n> ${
+            savedGuild.logging.leaving.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Leaving`
+          )
+        .setColor(Colors.Blurple),
+        new EmbedBuilder()
+        .setThumbnail(
+          "https://cdn.discordapp.com/emojis/860133545884123136.webp?size=240&quality=lossless"
+        )
+        .setTitle(`Shields Module Settings`)
+        .setDescription(
+          `> ***START EDITING THE SHIELDS MODULE BY SELECTING SOMETHING BELOW*** ${
+            config.emojis.unicode.shine
+          }\n\n> ${
+            config.emojis.unicode.textChannel 
+          } ${
+            interaction.guild?.channels.cache.get(savedGuild.shields.channel)?.name || "No Logging Channel"
+          }\n> ${
+            savedGuild.shields.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Toggle\n> ${
+            savedGuild.shields.raidShield.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Raid Protection\n> ${
+            savedGuild.shields.spamShield.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Spam Protection`
+          )
+        .setColor(Colors.Blurple),
+        new EmbedBuilder()
+        .setThumbnail(
+          "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
+        )
+        .setTitle("Content Filtering Settings")
+        .setDescription(
+          `> ***START EDITING THE CONTENT FILTERING MODULE BY SELECTING SOMETHING BELOW*** ${
+            config.emojis.unicode.shine
+          }\n\n> ${
+            config.emojis.unicode.textChannel 
+          } ${
+            interaction.guild?.channels.cache.get(savedGuild.contentFiltering.channel)?.name || "No Logging Channel"
+          }\n> ${
+            savedGuild.contentFiltering.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Toggle\n> ${
+            savedGuild.contentFiltering.nicknameFiltering.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Nickname Filtering Filtering\n> ${
+            savedGuild.contentFiltering.messageFiltering.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Message Filtering`
+          )
+        .setColor(Colors.Blurple),
+        new EmbedBuilder()
+        .setThumbnail(
+          "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
+        )
+        .setTitle("Ticketing Settings")
+        .setDescription(
+          `> ***START EDITING THE TICKETING MODULE BY SELECTING SOMETHING BELOW*** ${
+            config.emojis.unicode.shine
+          }\n\n> ${
+            savedGuild.ticketing.enabled ?
+              config.emojis.unicode.on :
+              config.emojis.unicode.off 
+          } Toggle\n> ${
+            config.emojis.unicode.textChannel 
+          } ${
+            interaction.guild?.channels.cache.get(savedGuild.ticketing.transcriptChannel)?.name || "No Transcript Channel"
+          }\n> ${config.emojis.unicode.support} \`${
+            savedGuild.ticketing
+              .supportRoles
+              .length
+          }\` Support Roles\n> ${
+            config.emojis.unicode.generalinfo
+          } \`${
+            savedGuild.ticketing?.tickets.size || 0
+          }\` Active Tickets`
+          )
+        .setColor(Colors.Blurple),
     ];
     
     var pages = embeds.length;
     let currentPage = 0;
     
+    let index: number = 0;
     if (pages === 1) {
       await interaction.followUp({ 
-        embeds: [embeds[0]]
+        embeds: [embeds[0].setFooter({ text: `Page ${currentPage+index} / ${pages}` })]
       });
       return;
     }
@@ -252,7 +277,6 @@ export default new (class ConfigCommand implements SlashCommand {
       time: 120000,
     });
 
-    let index: number = 0;
 
     try {
       setTimeout(async () => {
