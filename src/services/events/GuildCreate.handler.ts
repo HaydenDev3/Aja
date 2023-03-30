@@ -115,24 +115,24 @@ export default new (class GuildCreateHandler implements IEvent {
     collector.on("collect", async (interaction: ButtonInteraction) => {
       let savedGuild = await GuildSettings.findOne({ _id: guild.id });
       if (interaction.customId === "leave_guild") {
-        if ( !interaction.deferred )
+        if (!interaction.deferred)
           await interaction.deferReply({ ephemeral: true }).catch(() => {});
         await guild.leave();
         await interaction.followUp("Left the guild.");
       } else if (interaction.customId === "delete_guild_data") {
-        if ( !interaction.deferred )
+        if (!interaction.deferred)
           await interaction.deferReply({ ephemeral: true }).catch(() => {});
         if (!savedGuild) {
           await interaction.followUp(`Guild doesn't have any data`);
         } else {
-          if ( !interaction.deferred )
+          if (!interaction.deferred)
             await interaction.deferReply({ ephemeral: true }).catch(() => {});
           await GuildSettings.deleteOne({ _id: guild.id });
           await interaction.followUp("Deleted guild data.");
           return;
         }
       } else if (interaction.customId === "create_guild_data") {
-        if ( !interaction.deferred )
+        if (!interaction.deferred)
           await interaction.deferReply({ ephemeral: true }).catch(() => {});
         if (!savedGuild) {
           savedGuild = new GuildSettings({ _id: guild.id });

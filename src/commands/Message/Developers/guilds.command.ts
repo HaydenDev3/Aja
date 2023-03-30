@@ -28,9 +28,11 @@ export default new (class GuildsCommand implements Command {
     const totalGuilds = guilds.length;
 
     if (totalGuilds === 0) {
-      await message.reply(`> ${config.emojis.unicode.wrong} I am not in any guilds.`);
+      await message.reply(
+        `> ${config.emojis.unicode.wrong} I am not in any guilds.`
+      );
       return;
-    };
+    }
 
     const rowsPerPage = 10;
     const totalPages = Math.ceil(totalGuilds / rowsPerPage);
@@ -52,7 +54,7 @@ export default new (class GuildsCommand implements Command {
             .setLabel("Support")
             .setURL(config.discord.supportServerURL)
             .setStyle(ButtonStyle.Link)
-            .setEmoji(config.emojis.id.generalinfo)
+            .setEmoji(config.emojis.id.generalinfo),
         ] as Array<ButtonBuilder>;
 
         if (pageNumber > 1) {
@@ -77,7 +79,9 @@ export default new (class GuildsCommand implements Command {
 
         return {
           content: pageMessage,
-          components: [new ActionRowBuilder<ButtonBuilder>().addComponents(buttons)],
+          components: [
+            new ActionRowBuilder<ButtonBuilder>().addComponents(buttons),
+          ],
         };
       };
 
@@ -87,18 +91,18 @@ export default new (class GuildsCommand implements Command {
         if (interaction.user.id !== interaction.client.user.id) {
           return false;
         }
-  
+
         if (!interaction.isButton()) {
           return false;
         }
-  
+
         if (
           interaction.customId !== "prev_page" &&
           interaction.customId !== "next_page"
         ) {
           return false;
         }
-  
+
         return true;
       };
 
@@ -109,21 +113,21 @@ export default new (class GuildsCommand implements Command {
 
       collector.on("collect", async (interaction) => {
         await interaction.deferUpdate();
-  
+
         if (interaction.customId === "prev_page") {
           currentPage--;
         } else {
           currentPage++;
         }
-  
+
         await initialPage.edit(generatePage(currentPage));
       });
 
       collector.on("end", async () => {
-          await initialPage.edit({
-            content: "This session has expired",
-            components: [],
-          });
+        await initialPage.edit({
+          content: "This session has expired",
+          components: [],
+        });
       });
     } catch (error: any) {
       await message.channel.send(

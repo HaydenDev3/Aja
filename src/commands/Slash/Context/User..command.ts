@@ -22,8 +22,11 @@ const badges = {
   Partner: config.emojis.unicode.discordpartner,
   staff: config.emojis.unicode.discordstaff,
   Hypesquad: config.emojis.unicode.hypesquad,
-  HypeSquadOnlineHouse2: config.emojis.unicode.HSBrilliance, /** @INFO - Brilliance HypeSquad House */
-  HypeSquadOnlineHouse3: config.emojis.unicode.HSBravery, /** @INFO - Braver HypeSquad House */
+  HypeSquadOnlineHouse2:
+    config.emojis.unicode
+      .HSBrilliance /** @INFO - Brilliance HypeSquad House */,
+  HypeSquadOnlineHouse3:
+    config.emojis.unicode.HSBravery /** @INFO - Braver HypeSquad House */,
   PremiumEarlySupporter: config.emojis.unicode.earlysupporter,
 };
 
