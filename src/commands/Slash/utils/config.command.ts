@@ -10,6 +10,7 @@ import {
   ComponentType,
   EmbedBuilder,
   Message,
+  PermissionFlagsBits,
   SlashCommandBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
@@ -19,12 +20,11 @@ import config from "../../../utils/Config";
 import Log from "../../../utils/Log";
 import SlashCommand from "../../SlashCommand";
 
-export var configMessage: Message;
-
 export default new (class ConfigCommand implements SlashCommand {
   data: SlashCommandBuilder = new SlashCommandBuilder()
   .setName("config")
   .setDescription("Indoor your server's journey...")
+  .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
   .setDMPermission(false)
   .setNSFW(false);
   
@@ -35,9 +35,10 @@ export default new (class ConfigCommand implements SlashCommand {
     });
 
     if (!savedGuild)
-      return await configMessage.edit({
+      return await interaction.followUp({
         content: `${config.emojis.unicode.wrong} Failed to load guild settings: Guild is not registered, please use ${config.emojis.unicode.slashCommand} \`/register\``,
         embeds: [],
+        ephemeral: true
       });
 
     const components = [
@@ -98,8 +99,12 @@ export default new (class ConfigCommand implements SlashCommand {
     const tips = [
       `In-order to edit a module use the buttons "Next" and "Previous" to scroll through pages and use the select menus binded to them.`,
       `Enable the Shields module to ensure that rule-breakers are kept out.`,
-      `You can join the beta-testers to get early-access to our new updates by going to our Onboarding channel in our support server.`
-    ];
+      `You can join the beta-testers to get early-access to our new updates by going to our Onboarding channel in our support server.`,
+      `Make sure to review your Ticketing module settings to ensure that your support team can effectively manage tickets.`,
+      `The Logging module is essential for monitoring user activity and ensuring the safety of your server.`,
+      `Customize your Shields module settings to meet the specific needs of your server.`,
+      `Regularly review and update your server's configuration to ensure that it remains secure and functional.`,
+    ];    
     const message = await interaction.followUp({
       embeds: [
         new EmbedBuilder()
@@ -107,16 +112,16 @@ export default new (class ConfigCommand implements SlashCommand {
                 "https://cdn.discordapp.com/emojis/859388128040976384.webp?size=240&quality=lossless"
           )
           .setTitle(`Loading settings...`)
-          .setDescription(`> Please be patient while I get the settings... ${config.emojis.unicode.shine}\n> ${
-            config.emojis.unicode.reply
-          } ***PRO TIP***: ${tips[Math.floor(Math.random() * tips.length)]}`)
+          .setDescription(`> Please be patient while I get the settings... ${config.emojis.unicode.shine}`)
           .setColor(Colors.Blurple)
+        .setFooter({ text: `Tip: ${
+          tips[Math.floor(Math.random() * tips.length)]
+        }`, iconURL: await interaction.user.displayAvatarURL({ forceStatic: false }) })
         ],
         ephemeral: false,
       });
       
       var embeds: EmbedBuilder[] = [
-        new EmbedBuilder().setTitle("Your not supposed to see this"),
         new EmbedBuilder()
         .setThumbnail(
           "https://cdn.discordapp.com/emojis/866599434098835486.webp?size=96&quality=lossless"
@@ -139,7 +144,11 @@ export default new (class ConfigCommand implements SlashCommand {
             ) || "None"
           }\` Hold Role (Security)`
           )
-          .setColor(Colors.Blurple),
+          .setColor(Colors.Blurple)
+          .setFooter({ text: `Tip: ${
+            tips[Math.floor(Math.random() * tips.length)]
+          }`, iconURL: await interaction.user.displayAvatarURL({ forceStatic: false }) })
+          .setTimestamp(new Date()),
         new EmbedBuilder()
         .setThumbnail(
           "https://cdn.discordapp.com/emojis/1090144515580510291.webp?size=240&quality=lossless"
@@ -171,7 +180,11 @@ export default new (class ConfigCommand implements SlashCommand {
               config.emojis.unicode.off 
           } Leaving`
           )
-        .setColor(Colors.Blurple),
+        .setColor(Colors.Blurple)
+        .setFooter({ text: `Tip: ${
+          tips[Math.floor(Math.random() * tips.length)]
+        }`, iconURL: await interaction.user.displayAvatarURL({ forceStatic: false }) })
+        .setTimestamp(new Date()),
         new EmbedBuilder()
         .setThumbnail(
           "https://cdn.discordapp.com/emojis/860133545884123136.webp?size=240&quality=lossless"
@@ -198,7 +211,11 @@ export default new (class ConfigCommand implements SlashCommand {
               config.emojis.unicode.off 
           } Spam Protection`
           )
-        .setColor(Colors.Blurple),
+        .setColor(Colors.Blurple)
+        .setFooter({ text: `Tip: ${
+          tips[Math.floor(Math.random() * tips.length)]
+        }`, iconURL: await interaction.user.displayAvatarURL({ forceStatic: false }) })
+        .setTimestamp(new Date()),
         new EmbedBuilder()
         .setThumbnail(
           "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
@@ -225,7 +242,11 @@ export default new (class ConfigCommand implements SlashCommand {
               config.emojis.unicode.off 
           } Message Filtering`
           )
-        .setColor(Colors.Blurple),
+        .setColor(Colors.Blurple)
+        .setFooter({ text: `Tip: ${
+          tips[Math.floor(Math.random() * tips.length)]
+        }`, iconURL: await interaction.user.displayAvatarURL({ forceStatic: false }) })
+        .setTimestamp(new Date()),
         new EmbedBuilder()
         .setThumbnail(
           "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
@@ -252,7 +273,11 @@ export default new (class ConfigCommand implements SlashCommand {
             savedGuild.ticketing?.tickets.size || 0
           }\` Active Tickets`
           )
-        .setColor(Colors.Blurple),
+        .setColor(Colors.Blurple)
+        .setFooter({ text: `Tip: ${
+          tips[Math.floor(Math.random() * tips.length)]
+        }`, iconURL: await interaction.user.displayAvatarURL({ forceStatic: false }) })
+        .setTimestamp(new Date()),
     ];
     
     var pages = embeds.length;
@@ -261,7 +286,7 @@ export default new (class ConfigCommand implements SlashCommand {
     let index: number = 0;
     if (pages === 1) {
       await interaction.followUp({ 
-        embeds: [embeds[0].setFooter({ text: `Page ${currentPage+index} / ${pages}` })]
+        embeds: [embeds[0]]
       });
       return;
     }
@@ -281,7 +306,7 @@ export default new (class ConfigCommand implements SlashCommand {
     try {
       setTimeout(async () => {
         await message.edit({
-          embeds: [embeds[1]],
+          embeds: [embeds[0]],
           components,
           });
       }, 3000);
@@ -291,14 +316,14 @@ export default new (class ConfigCommand implements SlashCommand {
           if (index === 0) return;
           index--;
           await i.update({
-            embeds: [embeds[index].setFooter({ text: `Page ${currentPage+index} / ${pages}` })],
+            embeds: [embeds[index]],
             components,
           });
         } else if (i.customId === "next") {
           if (index === embeds.length - 1) return;
           index++;
           await i.update({
-            embeds: [embeds[index].setFooter({ text: `Page ${currentPage+index} / ${pages}` })],
+            embeds: [embeds[index]],
             components,
           });
         } else if ( i.customId === "export_guild_data" ) {
