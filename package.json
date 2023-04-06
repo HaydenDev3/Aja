@@ -2,6 +2,9 @@
   "name": "ajalightweight",
   "version": "1.0.0",
   "main": "app.ts",
+  "repository": {
+    "url": "https://www.github.com/HaydenDev3/Aja.git"
+  },
   "license": "MIT",
   "dependencies": {
     "@types/express": "^4.17.17",
@@ -10,6 +13,7 @@
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "particles.js": "^2.0.0"
   }
 }
