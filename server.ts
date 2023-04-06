@@ -1,31 +1,29 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import { createServer } from 'http';
-import { router as CommandsRouter } from './routes/commands';
-import config from "./config.json";
-import { load } from 'particles.js';
-import path from "path";
+import path from 'path';
+import CommandsManager from './managers/Commands';
 
-const app = express();
-export const server = createServer(app);
+dotenv.config();
+const app: Application = express();
+const server = createServer(app);
+const commands = new CommandsManager();
 
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-load('particles-js', 'assets/particles.json', function() {
-    console.log('callback - particles.js config loaded');
-  });
+app.get('/', (req: Request, res: Response) =>
+  res.status(200).sendFile(path.join(__dirname, 'public', 'index.html'))
+);
 
-app.get('/', (req: Request, res: Response) => 
-    res.status(200).sendFile(path.join(__dirname, "public", "index.html")));
+app.get('/tos', (req: Request, res: Response) =>
+  res.status(200).sendFile(path.join(__dirname, 'public', 'Terms_Of_Service.html'))
+);
 
-app.get('/tos', (req: Request, res: Response) => 
-    res.status(200).sendFile(path.join(__dirname, "public", "Terms_Of_Service.html")));
+app.get('/privacy', (req: Request, res: Response) =>
+  res.status(200).sendFile(path.join(__dirname, 'public', 'Privacy_Policy.html'))
+);
 
-app.get('/privacy', (req: Request, res: Response) => 
-    res.status(200).sendFile(path.join(__dirname, "public", "Privacy_Policy.html")));
-
-app.use('/commands', CommandsRouter);
-server.listen(3000, "0.0.0.0", () => console.log("Hello World"));
+server.listen(3000, '0.0.0.0', async () => {
+  console.log('Server listening on port 3000');
+  await commands.init();
+});
