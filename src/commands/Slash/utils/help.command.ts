@@ -28,7 +28,7 @@ export default new (class HelpCommand implements SlashCommand {
     const commands = await await client.application?.commands.fetch();
     if (!commands) {
       console.log(`❌ No global slash commands found.`);
-      return;
+      return; 
     }
 
     const commandList = commands
@@ -107,8 +107,8 @@ export default new (class HelpCommand implements SlashCommand {
       async (interaction: StringSelectMenuInteraction) => {
         if (interaction.customId !== "guide") return;
 
-        const [guide] = interaction.values;
-        switch (guide) {
+        const [value] = interaction.values;
+        switch (value) {
           case "commands": {
             await message.edit({
               embeds: [

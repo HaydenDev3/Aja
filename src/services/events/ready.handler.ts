@@ -1,5 +1,5 @@
 import { ActivityType, Client, ClientEvents, Routes } from "discord.js";
-import { API } from "../../api/app";
+import { Dashboard } from "../../Dashboard/app";
 import MessageCommandService from "../../commands/Commands.service";
 import SlashCommandService from "../../commands/SlashCommands.service";
 import config from "../../utils/Config";
@@ -19,14 +19,15 @@ export default new (class ReadyHandler implements IEvent {
     private messageCommands: MessageCommandService = Deps.get<MessageCommandService>(
       MessageCommandService
     ),
-    private api: API = Deps.get<API>(API)
+    private dashboard: Dashboard = Deps.get<Dashboard>(Dashboard),
   ) {}
 
   invoke = async (bot: Client) => {
     Log.info(`It's live!`, "launcher");
     await this.messageCommands.init(); /** @INFO - Register Message Command Services */
-    await this.SlashcommandService.init(); /** @INFO - Register Slash Command sServices */
-    this.api.init(); /** @INFO - Initalizing the API Server using Deps */
+    await this.SlashcommandService.init(); /** @INFO - Register Slash Command Services */
+    this.dashboard.init(); /** @INFO - Initalizing the Dashboard's Server using Deps */ 
+      /** @INFO - Remove all the Dashboard related stuff considering if you host you want Aja's dashboard you're not getting it. ~- No Offense ~- */
 
     new TicketingService();
 
