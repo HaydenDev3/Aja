@@ -1,4 +1,4 @@
-<div style="text-align:center"><img src="https://cdn.discordapp.com/avatars/994930207918129182/e9f72a2e943bf0ee4514a4559c01913e.webp" alt="Logo" /></div>
+<div style="text-align:center"><img src="./logo.png" alt="Logo" width="32" height="32" /></div>
 
 <h1 style='text-align: center;'>Aja Discord Bot</h1>
 <p style="text-align: center;">Aja is a cutting-edge ultimate security/utility Discord bot that should replace <b>MEE6</b></p>
