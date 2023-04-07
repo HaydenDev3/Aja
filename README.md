@@ -6,12 +6,11 @@
 <div>
     <h2>Is there going to be a Dashboard</h2> 
     <p>Yes, there will be sooner or later.</p>
-
-    <details>
-        <summary>Are you able to host Aja's Dashboard?</summary>
-        <p>No, you will not be able to host Aja's dashboard individually.</p>
-    </details>
 </div>
+<details>
+    <summary>Are you able to host Aja's Dashboard?</summary>
+    <p>No, you will not be able to host Aja's dashboard individually.</p>
+</details>
 
 <b><h1>Features:</h1></b>
 
