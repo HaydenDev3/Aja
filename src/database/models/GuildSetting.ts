@@ -3,10 +3,12 @@ import {
   APIEmbed,
   Guild,
   GuildMember,
+  Message,
   Role,
   TextChannel,
 } from "discord.js";
 import mongoose, { Schema, Document } from "mongoose";
+import { client } from "../../bot";
 import { Action } from "../Action";
 export class Module {
   enabled: boolean;
@@ -16,18 +18,48 @@ export class Module {
   }
 }
 
+export interface IButton { label: string; url?: string; embed?: APIEmbed };
+
 export class StickyMessage extends Module {
-  message: string;
+  updatedAt?: Date = new Date();
+  message: Message | any;
+  content: string;
   channelId: string;
   messageId: string;
-  buttons: { label: string; url?: string; embed?: APIEmbed }[];
+  buttons: IButton[];
 
   constructor() {
     super();
-    this.message = "";
+    this.message = ""
+    this.content = '';
     this.channelId = "";
     this.messageId = "";
     this.buttons = [];
+  }
+
+  setContent (content: string): this {
+    this.content = content;
+    return this;
+  }
+
+  setChannelId (channelId: string): this {
+    this.channelId = channelId;
+    return this;
+  };
+  
+  setMessageId (key: string): this {
+    this.messageId = key;
+    return this;
+  };
+
+  setButtons (components: IButton[]): this {
+    this.buttons = components;
+    return this;
+  };
+  
+  setMessage (message: Message): this {
+    this.message = message;
+    return this;
   }
 }
 
