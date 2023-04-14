@@ -89,7 +89,7 @@ export default new (class UserContextMenuCommand implements SlashCommand {
       const flagString = flags
         .map(
           (flag) =>
-            `> ${badges[flag]} **${flag
+            `> **${flag
               .replace("HypeSquadOnlineHouse2", "HypeSquad Brilliance")
               .replace("HypeSquadOnlineHouse3", "HypeSquad Bravey")
               .replace("VerifiedDeveloper", "Bot Developer")
