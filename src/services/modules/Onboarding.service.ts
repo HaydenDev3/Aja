@@ -1,5 +1,11 @@
 import RegisteringService from "../registering.service";
-import { APIEmbed, ButtonBuilder, ActionRowBuilder, MessageComponentInteraction, ButtonStyle } from "discord.js";
+import {
+  APIEmbed,
+  ButtonBuilder,
+  ActionRowBuilder,
+  MessageComponentInteraction,
+  ButtonStyle,
+} from "discord.js";
 
 export default class OnboardingService extends RegisteringService {
   public embeds: APIEmbed[] = [];
@@ -38,7 +44,9 @@ export default class OnboardingService extends RegisteringService {
         ephemeral: true,
       });
     } else {
-      const embed = this.embeds.find((e) => e.title === button.data.label?.replace(" ", "_").toLowerCase());
+      const embed = this.embeds.find(
+        (e) => e.title === button.data.label?.replace(" ", "_").toLowerCase()
+      );
       if (!embed) return;
 
       await interaction.reply({

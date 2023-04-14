@@ -10,6 +10,7 @@ import {
 import mongoose, { Schema, Document } from "mongoose";
 import { client } from "../../bot";
 import { Action } from "../Action";
+
 export class Module {
   enabled: boolean;
 
@@ -18,7 +19,16 @@ export class Module {
   }
 }
 
-export interface IButton { label: string; url?: string; embed?: APIEmbed };
+export class StarboardModule extends Module {
+  channelId: string = "";
+  threshold: number = 2;
+}
+
+export interface IButton {
+  label: string;
+  url?: string;
+  embed?: APIEmbed;
+}
 
 export class StickyMessage extends Module {
   updatedAt?: Date = new Date();
@@ -30,34 +40,34 @@ export class StickyMessage extends Module {
 
   constructor() {
     super();
-    this.message = ""
-    this.content = '';
+    this.message = "";
+    this.content = "";
     this.channelId = "";
     this.messageId = "";
     this.buttons = [];
   }
 
-  setContent (content: string): this {
+  setContent(content: string): this {
     this.content = content;
     return this;
   }
 
-  setChannelId (channelId: string): this {
+  setChannelId(channelId: string): this {
     this.channelId = channelId;
     return this;
-  };
-  
-  setMessageId (key: string): this {
+  }
+
+  setMessageId(key: string): this {
     this.messageId = key;
     return this;
-  };
+  }
 
-  setButtons (components: IButton[]): this {
+  setButtons(components: IButton[]): this {
     this.buttons = components;
     return this;
-  };
-  
-  setMessage (message: Message): this {
+  }
+
+  setMessage(message: Message): this {
     this.message = message;
     return this;
   }
@@ -132,10 +142,10 @@ export class NicknameFiltering extends Module {
 }
 
 export class VerificationSettings extends Module {
-  channel: string; 
+  channel: string;
   memberRole: string;
 
-  constructor () {
+  constructor() {
     super();
 
     this.channel = "";
@@ -240,6 +250,7 @@ export interface GuildSettingsDocument extends Document {
   contentFiltering: ContentFiltering;
   shields: Shields;
   stickyMessages: StickyMessage[];
+  starboard: StarboardModule;
 }
 
 export const guildSettingsSchema = new Schema<GuildSettingsDocument>({
@@ -250,6 +261,7 @@ export const guildSettingsSchema = new Schema<GuildSettingsDocument>({
   contentFiltering: { type: Object, default: new ContentFiltering() },
   ticketing: { type: Object, default: new TicketingModule() },
   stickyMessages: [{ type: Object, default: new StickyMessage() }],
+  starboard: { type: Object, default: new StarboardModule() }
 });
 
 export const GuildSettings = mongoose.model<GuildSettingsDocument>(

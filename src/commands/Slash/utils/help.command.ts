@@ -28,7 +28,7 @@ export default new (class HelpCommand implements SlashCommand {
     const commands = await await client.application?.commands.fetch();
     if (!commands) {
       console.log(`❌ No global slash commands found.`);
-      return; 
+      return;
     }
 
     const commandList = commands

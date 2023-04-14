@@ -19,15 +19,15 @@ export default new (class ReadyHandler implements IEvent {
     private messageCommands: MessageCommandService = Deps.get<MessageCommandService>(
       MessageCommandService
     ),
-    private dashboard: Dashboard = Deps.get<Dashboard>(Dashboard),
+    private dashboard: Dashboard = Deps.get<Dashboard>(Dashboard)
   ) {}
 
   invoke = async (bot: Client) => {
     Log.info(`It's live!`, "launcher");
     await this.messageCommands.init(); /** @INFO - Register Message Command Services */
     await this.SlashcommandService.init(); /** @INFO - Register Slash Command Services */
-    this.dashboard.init(); /** @INFO - Initalizing the Dashboard's Server using Deps */ 
-      /** @INFO - Remove all the Dashboard related stuff considering if you host you want Aja's dashboard you're not getting it. ~- No Offense ~- */
+    this.dashboard.init(); /** @INFO - Initalizing the Dashboard's Server using Deps */
+    /** @INFO - Remove all the Dashboard related stuff considering if you host you want Aja's dashboard you're not getting it. ~- No Offense ~- */
 
     new TicketingService();
 

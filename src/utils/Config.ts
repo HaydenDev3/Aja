@@ -13,6 +13,8 @@ export interface Config {
     clientID: string;
     clientSecret: string;
     callbackUrl: string;
+    feedbackChannelId: string;
+    guildLogsChannelId: string;
   };
   api: {
     sessionSecret: string;
@@ -100,6 +102,8 @@ const config: Config = {
     callbackUrl: `http://localhost:1000/auth/discord/callback`,
     clientID: "994930207918129182",
     clientSecret: process.env!.clientSecret as string,
+    feedbackChannelId: "1096312799627587635",
+    guildLogsChannelId: "1086484073800794274",
   },
   api: {
     url: "http://localhost:1000",
