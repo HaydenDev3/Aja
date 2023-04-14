@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const achievementSchema = new mongoose.Schema({
   userId: String,
@@ -15,6 +15,6 @@ export interface IAchievement extends mongoose.Document {
 }
 
 export const Achievement = mongoose.model<IAchievement>(
-  "Achievement",
+  'Achievement',
   achievementSchema
 );

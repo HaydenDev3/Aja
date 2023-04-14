@@ -1,11 +1,11 @@
-import Discord, { Client, Collection, Events, REST, Routes } from "discord.js";
-import fs from "fs";
-import util from "util";
-import Command from "../commands/Command";
-import SlashCommand from "../commands/SlashCommand";
-import Deps from "../utils/Deps";
-import { glob } from "glob";
-import Log from "../utils/Log";
+import Discord, { Client, Collection, Events, REST, Routes } from 'discord.js';
+import fs from 'fs';
+import util from 'util';
+import Command from '../commands/Command';
+import SlashCommand from '../commands/SlashCommand';
+import Deps from '../utils/Deps';
+import { glob } from 'glob';
+import Log from '../utils/Log';
 
 export default class RegisteringService {
   public readdir = util.promisify(fs.readdir);
@@ -17,7 +17,7 @@ export default class RegisteringService {
 
   constructor() {}
 
-  public rest: REST = new REST({ version: "10" }).setToken(
+  public rest: REST = new REST({ version: '10' }).setToken(
     this.client.token as string
   );
 
@@ -34,7 +34,7 @@ export default class RegisteringService {
       });
     }
 
-    Log.info("Refreshed (/) Slash Commands", "commands");
+    Log.info('Refreshed (/) Slash Commands', 'commands');
   }
 
   public async getCommands() {

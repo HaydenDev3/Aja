@@ -11,17 +11,17 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
   Snowflake,
-} from "discord.js";
-import { GuildSettings } from "../../../database/models/GuildSetting";
-import config from "../../../utils/Config";
-import Command, { MessageCommandData } from "../../Command";
+} from 'discord.js';
+import { GuildSettings } from '../../../database/models/GuildSetting';
+import config from '../../../utils/Config';
+import Command, { MessageCommandData } from '../../Command';
 
 export default new (class HelpCommand implements Command {
   data: MessageCommandData = {
-    name: "register",
+    name: 'register',
     summary:
-      "Register your server into our databases to indoor your servers security.",
-    permissions: ["ManageGuild"],
+      'Register your server into our databases to indoor your servers security.',
+    permissions: ['ManageGuild'],
   };
 
   invoke = async (client: Client, message: Message) => {
@@ -35,21 +35,21 @@ export default new (class HelpCommand implements Command {
     }
 
     const embed = new EmbedBuilder({
-      title: "Confirm Server Registration",
+      title: 'Confirm Server Registration',
       description: `Are you sure you want to register **${message.guild?.name}**?`,
       color: Colors.Blurple,
     });
 
     const buttonRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder({
-        customId: "register_yes",
-        label: "Yes",
+        customId: 'register_yes',
+        label: 'Yes',
         style: ButtonStyle.Success,
         emoji: config.emojis.id.correct,
       }),
       new ButtonBuilder({
-        customId: "register_no",
-        label: "No",
+        customId: 'register_no',
+        label: 'No',
         style: ButtonStyle.Danger,
         emoji: config.emojis.id.wrong,
       })
@@ -60,16 +60,16 @@ export default new (class HelpCommand implements Command {
       components: [buttonRow as any],
     });
 
-    const customIds = ["register_yes", "register_no"];
+    const customIds = ['register_yes', 'register_no'];
     const filter = (i: any) => customIds.includes(i.customId);
     const collector = await message.createMessageComponentCollector({
       filter,
       time: 160000,
     });
 
-    collector.on("collect", async (i: ButtonInteraction) => {
+    collector.on('collect', async (i: ButtonInteraction) => {
       if (!i.isButton()) return;
-      if (i.customId === "register_yes") {
+      if (i.customId === 'register_yes') {
         // Save the server settings to the database
         if (savedGuild) {
           await message.edit({
@@ -94,7 +94,7 @@ export default new (class HelpCommand implements Command {
       }
     });
 
-    collector.on("end", async () => {
+    collector.on('end', async () => {
       if (!(await msg)) {
         await msg.edit({
           components: [],

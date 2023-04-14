@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface PremiumSettings {
   guildId: string;
@@ -36,6 +36,6 @@ const PremiumSettingsSchema = new Schema<PremiumSettingsDocument>({
 });
 
 export const PremiumSettingsModel = mongoose.model<PremiumSettingsDocument>(
-  "PremiumSettings",
+  'PremiumSettings',
   PremiumSettingsSchema
 );

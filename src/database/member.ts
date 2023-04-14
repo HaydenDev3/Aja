@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const membersSchema = new mongoose.Schema({
   _id: String,
@@ -13,6 +13,6 @@ export interface MemberDocument extends mongoose.Document {
 }
 
 export const SavedMember = mongoose.model<MemberDocument>(
-  "members",
+  'members',
   membersSchema
 );

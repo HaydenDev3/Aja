@@ -1,7 +1,7 @@
-import { GuildMember } from "discord.js";
-import { GuildSettings } from "../../database/models/GuildSetting";
-import { InfractionModel } from "../../database/models/Infraction";
-import RegisteringService from "../registering.service";
+import { GuildMember } from 'discord.js';
+import { GuildSettings } from '../../database/models/GuildSetting';
+import { InfractionModel } from '../../database/models/Infraction';
+import RegisteringService from '../registering.service';
 
 export default class NicknameFiltering extends RegisteringService {
   constructor() {
@@ -9,7 +9,7 @@ export default class NicknameFiltering extends RegisteringService {
   }
 
   public async init(member: GuildMember) {
-    if (member.user.bot || member.nickname === "") return;
+    if (member.user.bot || member.nickname === '') return;
     const savedGuild = await GuildSettings.findOne({ _id: member.guild.id });
     if (!savedGuild?.contentFiltering.nicknameFiltering.enabled || !savedGuild)
       return;
@@ -22,7 +22,7 @@ export default class NicknameFiltering extends RegisteringService {
     if (filteredNickname) {
       for (const action of nicknameFiltering.action) {
         switch (action) {
-          case "modify": {
+          case 'modify': {
             const id = Math.floor(Math.random() * 10000) + 5000;
             try {
               await member.setNickname(`Moderated Nickname ${id}`);
@@ -31,21 +31,21 @@ export default class NicknameFiltering extends RegisteringService {
             }
             break;
           }
-          case "ban": {
+          case 'ban': {
             await member.ban({
               reason: `Auto Moderation for: Nickname Filtering`,
             });
             break;
           }
-          case "kick": {
+          case 'kick': {
             await member.kick(`Auto Moderation for: Nickname Filtering`);
             break;
           }
-          case "warn": {
+          case 'warn': {
             const newData = await InfractionModel.create({
               _id: member.guild.id,
               memberId: member?.id,
-              reason: "New Infraction for: Nickname Filtering",
+              reason: 'New Infraction for: Nickname Filtering',
               date: new Date(),
             });
             await newData.save();

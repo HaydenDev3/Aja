@@ -12,13 +12,13 @@ import {
   ButtonInteraction,
   PermissionFlagsBits,
   GuildChannel,
-} from "discord.js";
+} from 'discord.js';
 import {
   GuildSettings,
   GuildSettingsDocument,
-} from "../../database/models/GuildSetting";
-import Deps from "../../utils/Deps";
-import RegisteringService from "../registering.service";
+} from '../../database/models/GuildSetting';
+import Deps from '../../utils/Deps';
+import RegisteringService from '../registering.service';
 
 interface Ticket {
   guild: Guild;
@@ -30,7 +30,7 @@ interface Ticket {
 export default class TicketingService extends RegisteringService {
   constructor() {
     super();
-    this.client.on("messageCreate", this.handleMessage.bind(this));
+    this.client.on('messageCreate', this.handleMessage.bind(this));
   }
 
   private async handleMessage(message: Message) {
@@ -43,7 +43,7 @@ export default class TicketingService extends RegisteringService {
       if (ticket && ticket.open) {
         // This is a reply to an existing ticket
         const embed = new EmbedBuilder()
-          .setColor("#0000ff")
+          .setColor('#0000ff')
           .setTitle(`Reply from ${message.author.tag}`)
           .setDescription(message.content)
           .setTimestamp();
@@ -79,13 +79,13 @@ export default class TicketingService extends RegisteringService {
           });
         }
         const embed = new EmbedBuilder()
-          .setColor("#0000ff")
+          .setColor('#0000ff')
           .setTitle(`New ticket from ${message.author.tag}`)
           .setDescription(message.content)
           .setTimestamp();
         const closeButton = new ButtonBuilder()
-          .setCustomId("close-ticket")
-          .setLabel("Close Ticket")
+          .setCustomId('close-ticket')
+          .setLabel('Close Ticket')
           .setStyle(ButtonStyle.Danger);
         const row = new ActionRowBuilder().addComponents(closeButton);
         const msg = await channel.send({
@@ -103,20 +103,20 @@ export default class TicketingService extends RegisteringService {
 
         const collector = await message.createMessageComponentCollector({
           filter: (interaction: any) =>
-            interaction.customId == "close-ticket" &&
+            interaction.customId == 'close-ticket' &&
             interaction.user.id === message.author.id,
           time: 60000, // 1 minute
         });
-        collector.on("collect", async (interaction: ButtonInteraction) => {
+        collector.on('collect', async (interaction: ButtonInteraction) => {
           collector.stop();
           await interaction.deferUpdate();
           await this.closeTicket(message.member as GuildMember, savedGuild);
         });
-        collector.on("end", async () => {
+        collector.on('end', async () => {
           if (!message) return;
           const closeButton = new ButtonBuilder()
-            .setCustomId("close-ticket")
-            .setLabel("Close Ticket")
+            .setCustomId('close-ticket')
+            .setLabel('Close Ticket')
             .setStyle(ButtonStyle.Danger)
             .setDisabled(true);
           const row = new ActionRowBuilder().addComponents(closeButton);
@@ -125,12 +125,12 @@ export default class TicketingService extends RegisteringService {
       }
     } else if (
       message.channel.type === ChannelType.GuildText &&
-      message.member?.roles.cache.has("<staff-role-id>")
+      message.member?.roles.cache.has('<staff-role-id>')
     ) {
       const ticket = this.getTicketFromChannel(message.channel, savedGuild);
       if (ticket) {
         const embed = new EmbedBuilder()
-          .setColor("#0000ff")
+          .setColor('#0000ff')
           .setTitle(`Reply from ${message.author.tag}`)
           .setDescription(message.content)
           .setTimestamp();
@@ -138,9 +138,9 @@ export default class TicketingService extends RegisteringService {
       } else {
         // Ticket is closed, send error message to staff member
         const embed = new EmbedBuilder()
-          .setColor("#ff0000")
-          .setTitle("Error")
-          .setDescription("This ticket is closed.")
+          .setColor('#ff0000')
+          .setTitle('Error')
+          .setDescription('This ticket is closed.')
           .setTimestamp();
         await message.reply({ embeds: [embed] });
       }
@@ -168,8 +168,8 @@ export default class TicketingService extends RegisteringService {
       await ticket.channel.delete();
       savedGuild.ticketing.tickets.delete(member.id);
       const embed = new EmbedBuilder()
-        .setColor("#00ff00")
-        .setTitle("Ticket Closed")
+        .setColor('#00ff00')
+        .setTitle('Ticket Closed')
         .setDescription(
           `The ticket opened by ${member.user.tag} has been closed.`
         )

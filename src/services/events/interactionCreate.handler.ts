@@ -6,14 +6,14 @@ import {
   Colors,
   ContextMenuCommandInteraction,
   EmbedBuilder,
-} from "discord.js";
-import SlashCommandService from "../../commands/SlashCommands.service";
-import Deps from "../../utils/Deps";
-import Log from "../../utils/Log";
-import { EventType, IEvent } from "../events.service";
+} from 'discord.js';
+import SlashCommandService from '../../commands/SlashCommands.service';
+import Deps from '../../utils/Deps';
+import Log from '../../utils/Log';
+import { EventType, IEvent } from '../events.service';
 
 export default new (class InteractionCreateHandler implements IEvent {
-  on: keyof ClientEvents = "interactionCreate";
+  on: keyof ClientEvents = 'interactionCreate';
   type: EventType = 2;
 
   constructor(
@@ -52,10 +52,10 @@ export default new (class InteractionCreateHandler implements IEvent {
 
         await command.invoke(this.client, interaction);
       } catch (err: any) {
-        Log.fail(err.message, "commands");
+        Log.fail(err.message, 'commands');
       }
     } else if (interaction.isButton()) {
-      if (interaction.customId?.toLowerCase() !== "hide_message") return;
+      if (interaction.customId?.toLowerCase() !== 'hide_message') return;
 
       await interaction.message.delete().catch(() => {});
     } else if (interaction.isContextMenuCommand()) {

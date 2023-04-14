@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * Pings the specified URL at the given interval to keep the app alive.
@@ -10,7 +10,7 @@ function keepAlive(replitUrl: string) {
   setInterval(async () => {
     await axios.get(replitUrl);
 
-    console.log("App is being kept alive!");
+    console.log('App is being kept alive!');
   }, 120000); // pings every 5 minutes
 }
 

@@ -1,11 +1,11 @@
-import RegisteringService from "../registering.service";
+import RegisteringService from '../registering.service';
 import {
   APIEmbed,
   ButtonBuilder,
   ActionRowBuilder,
   MessageComponentInteraction,
   ButtonStyle,
-} from "discord.js";
+} from 'discord.js';
 
 export default class OnboardingService extends RegisteringService {
   public embeds: APIEmbed[] = [];
@@ -26,14 +26,14 @@ export default class OnboardingService extends RegisteringService {
   public async handleInteraction(interaction: MessageComponentInteraction) {
     const component = this.components.find((component) =>
       component.components.some(
-        (c: any) => c.customId === interaction.customId && c.type === "BUTTON"
+        (c: any) => c.customId === interaction.customId && c.type === 'BUTTON'
       )
     );
 
     if (!component) return;
 
     const button = component.components.find(
-      (c: any) => c.customId === interaction.customId && c.type === "BUTTON"
+      (c: any) => c.customId === interaction.customId && c.type === 'BUTTON'
     ) as ButtonBuilder;
 
     if (!button) return;
@@ -45,7 +45,7 @@ export default class OnboardingService extends RegisteringService {
       });
     } else {
       const embed = this.embeds.find(
-        (e) => e.title === button.data.label?.replace(" ", "_").toLowerCase()
+        (e) => e.title === button.data.label?.replace(' ', '_').toLowerCase()
       );
       if (!embed) return;
 

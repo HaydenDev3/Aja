@@ -4,56 +4,56 @@ import {
   ChannelType,
   ChatInputCommandInteraction,
   Client,
-} from "discord.js";
-import { GuildSettings } from "../../../database/models/GuildSetting";
-import StickyMessagesModule from "../../../services/modules/StickyMessage.service";
-import config from "../../../utils/Config";
-import Deps from "../../../utils/Deps";
-import Log from "../../../utils/Log";
-import SlashCommand from "../../SlashCommand";
+} from 'discord.js';
+import { GuildSettings } from '../../../database/models/GuildSetting';
+import StickyMessagesModule from '../../../services/modules/StickyMessage.service';
+import config from '../../../utils/Config';
+import Deps from '../../../utils/Deps';
+import Log from '../../../utils/Log';
+import SlashCommand from '../../SlashCommand';
 
 export default new (class StickyMessagesCommand implements SlashCommand {
   data: ApplicationCommandDataResolvable = {
-    name: "stickymessage",
-    description: "Create, update or delete a sticky message",
-    defaultMemberPermissions: ['ManageGuild', "ManageMessages"],
+    name: 'stickymessage',
+    description: 'Create, update or delete a sticky message',
+    defaultMemberPermissions: ['ManageGuild', 'ManageMessages'],
     options: [
       {
         type: ApplicationCommandOptionType.Subcommand,
-        name: "create",
-        description: "Create a new sticky message",
+        name: 'create',
+        description: 'Create a new sticky message',
         options: [
           {
             type: ApplicationCommandOptionType.Channel,
-            name: "channel",
-            description: "The channel to create the sticky message in",
+            name: 'channel',
+            description: 'The channel to create the sticky message in',
             channel_types: [ChannelType.GuildText],
             required: true,
           },
           {
             type: ApplicationCommandOptionType.String,
-            name: "content",
-            description: "The content of the sticky message",
+            name: 'content',
+            description: 'The content of the sticky message',
             required: true,
           },
         ],
       },
       {
         type: ApplicationCommandOptionType.Subcommand,
-        name: "edit",
-        description: "Edit a existing sticky message",
+        name: 'edit',
+        description: 'Edit a existing sticky message',
         options: [
           {
             type: ApplicationCommandOptionType.Channel,
-            name: "channel",
-            description: "The channel where the sticky message is located",
+            name: 'channel',
+            description: 'The channel where the sticky message is located',
             channel_types: [ChannelType.GuildText],
             required: true,
           },
           {
             type: ApplicationCommandOptionType.String,
-            name: "content",
-            description: "The new content of the sticky message",
+            name: 'content',
+            description: 'The new content of the sticky message',
             channel_types: [ChannelType.GuildText],
             required: true,
           },
@@ -61,13 +61,13 @@ export default new (class StickyMessagesCommand implements SlashCommand {
       },
       {
         type: ApplicationCommandOptionType.Subcommand,
-        name: "delete",
-        description: "Delete a sticky message",
+        name: 'delete',
+        description: 'Delete a sticky message',
         options: [
           {
             type: ApplicationCommandOptionType.Channel,
-            name: "channel",
-            description: "The channel where the sticky message is located",
+            name: 'channel',
+            description: 'The channel where the sticky message is located',
             channel_types: [ChannelType.GuildText],
             required: true,
           },
@@ -84,11 +84,11 @@ export default new (class StickyMessagesCommand implements SlashCommand {
 
   invoke = async (client: Client, interaction: ChatInputCommandInteraction) => {
     const subcommand = await interaction.options.getSubcommand();
-    const channel = await interaction.options.getChannel("channel", false);
-    const content = await interaction.options.getString("content", false);
+    const channel = await interaction.options.getChannel('channel', false);
+    const content = await interaction.options.getString('content', false);
 
     switch (subcommand) {
-      case "create": {
+      case 'create': {
         if (!content) {
           return interaction.followUp(
             `${config.emojis.unicode.wrong} Please provide the content for the sticky message.`
@@ -111,10 +111,10 @@ export default new (class StickyMessagesCommand implements SlashCommand {
           );
         }
       }
-      case "edit": {
+      case 'edit': {
         if (!content) {
           return interaction.reply(
-            "Please provide the new content for the sticky message."
+            'Please provide the new content for the sticky message.'
           );
         }
 
@@ -156,7 +156,7 @@ export default new (class StickyMessagesCommand implements SlashCommand {
         }
       }
 
-      case "delete": {
+      case 'delete': {
         const stickyMessage = channel;
 
         if (!stickyMessage) {

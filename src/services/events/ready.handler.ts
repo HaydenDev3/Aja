@@ -1,15 +1,15 @@
-import { ActivityType, Client, ClientEvents, Routes } from "discord.js";
-import { Dashboard } from "../../Dashboard/app";
-import MessageCommandService from "../../commands/Commands.service";
-import SlashCommandService from "../../commands/SlashCommands.service";
-import config from "../../utils/Config";
-import Deps from "../../utils/Deps";
-import Log from "../../utils/Log";
-import { EventType, IEvent } from "../events.service";
-import TicketingService from "../modules/Ticketing.service";
+import { ActivityType, Client, ClientEvents, Routes } from 'discord.js';
+import { Dashboard } from '../../Dashboard/app';
+import MessageCommandService from '../../commands/Commands.service';
+import SlashCommandService from '../../commands/SlashCommands.service';
+import config from '../../utils/Config';
+import Deps from '../../utils/Deps';
+import Log from '../../utils/Log';
+import { EventType, IEvent } from '../events.service';
+import TicketingService from '../modules/Ticketing.service';
 
 export default new (class ReadyHandler implements IEvent {
-  on: keyof ClientEvents = "ready";
+  on: keyof ClientEvents = 'ready';
   type: EventType = 2;
 
   constructor(
@@ -23,7 +23,7 @@ export default new (class ReadyHandler implements IEvent {
   ) {}
 
   invoke = async (bot: Client) => {
-    Log.info(`It's live!`, "launcher");
+    Log.info(`It's live!`, 'launcher');
     await this.messageCommands.init(); /** @INFO - Register Message Command Services */
     await this.SlashcommandService.init(); /** @INFO - Register Slash Command Services */
     this.dashboard.init(); /** @INFO - Initalizing the Dashboard's Server using Deps */

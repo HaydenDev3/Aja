@@ -1,14 +1,14 @@
-import RegisteringService from "../services/registering.service";
-import fs from "fs";
-import SlashCommand from "./SlashCommand";
+import RegisteringService from '../services/registering.service';
+import fs from 'fs';
+import SlashCommand from './SlashCommand';
 import {
   ChatInputCommandInteraction,
   ContextMenuCommandInteraction,
   Routes,
-} from "discord.js";
-import Log from "../utils/Log";
-import { GuildSettings } from "../database/models/GuildSetting";
-import { sync } from "glob";
+} from 'discord.js';
+import Log from '../utils/Log';
+import { GuildSettings } from '../database/models/GuildSetting';
+import { sync } from 'glob';
 
 export default class SlashCommandService extends RegisteringService {
   public readonly appCmds: SlashCommand[] = [];

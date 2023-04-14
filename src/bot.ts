@@ -4,11 +4,11 @@ import {
   OAuth2Scopes,
   PermissionFlagsBits,
   PermissionsBitField,
-} from "discord.js";
-import Deps from "./utils/Deps";
-import config from "./utils/Config";
-import EventsRegistery from "./services/events.service";
-import mongoose from "mongoose";
+} from 'discord.js';
+import Deps from './utils/Deps';
+import config from './utils/Config';
+import EventsRegistery from './services/events.service';
+import mongoose from 'mongoose';
 
 export const client: Client = Deps.add<Client>(
   Client,
@@ -26,7 +26,7 @@ mongoose.connect(config.database.uri, config.database.options);
 
 Deps.get<EventsRegistery>(EventsRegistery).init();
 
-export var invite: string = "";
+export var invite: string = '';
 client.login(config.discord.token).then(() => {
   invite = client.generateInvite({
     scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],

@@ -1,5 +1,5 @@
-import { Guild, Snowflake } from "discord.js";
-import mongoose, { Document, Schema } from "mongoose";
+import { Guild, Snowflake } from 'discord.js';
+import mongoose, { Document, Schema } from 'mongoose';
 
 interface MemberDocument extends Document {
   likes: string[];
@@ -7,7 +7,7 @@ interface MemberDocument extends Document {
 }
 
 export default mongoose.model<MemberDocument>(
-  "member",
+  'member',
   new Schema({
     likes: {
       type: [String],

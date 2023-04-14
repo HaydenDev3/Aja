@@ -1,8 +1,8 @@
-import { ClientEvents } from "discord.js";
-import mongoose, { connect, Connection } from "mongoose";
-import config from "../utils/Config";
-import Log from "../utils/Log";
-import RegisteringService from "./registering.service";
+import { ClientEvents } from 'discord.js';
+import mongoose, { connect, Connection } from 'mongoose';
+import config from '../utils/Config';
+import Log from '../utils/Log';
+import RegisteringService from './registering.service';
 
 export type EventType =
   | 1 // 1 = mongoose
@@ -27,7 +27,7 @@ export default class EventsRegistery extends RegisteringService {
   public async init() {
     const events = await this.readdir(`${__dirname}/events`);
 
-    for (const file of events.filter((file) => file.endsWith(".ts"))) {
+    for (const file of events.filter((file) => file.endsWith('.ts'))) {
       const handler = await this.importFile(`./events/${file}`);
       if (!handler) return;
 
@@ -40,7 +40,7 @@ export default class EventsRegistery extends RegisteringService {
         } else if (handler.type === 2) {
           Log.warn(
             `Skipping "${handler.on}" event handler as there is no Mongoose connection.`,
-            "handlers"
+            'handlers'
           );
         }
       } else {
@@ -49,6 +49,6 @@ export default class EventsRegistery extends RegisteringService {
       }
     }
 
-    Log.info(`Loaded: ${this.handlers.length} handlers.`, "handlers");
+    Log.info(`Loaded: ${this.handlers.length} handlers.`, 'handlers');
   }
 }

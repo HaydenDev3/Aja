@@ -1,5 +1,5 @@
-import { Guild } from "discord.js";
-import mongoose, { Document, Schema } from "mongoose";
+import { Guild } from 'discord.js';
+import mongoose, { Document, Schema } from 'mongoose';
 
 interface UserDocument extends Document {
   discordId: string;
@@ -48,4 +48,4 @@ const UserSchema: Schema = new Schema({
   ],
 });
 
-export default mongoose.model<UserDocument>("AuthUser", UserSchema);
+export default mongoose.model<UserDocument>('AuthUser', UserSchema);

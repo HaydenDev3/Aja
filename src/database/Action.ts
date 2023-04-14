@@ -1,1 +1,1 @@
-export type Action = "ban" | "kick" | "warn" | "timeout" | "hold" | "modify";
+export type Action = 'ban' | 'kick' | 'warn' | 'timeout' | 'hold' | 'modify';

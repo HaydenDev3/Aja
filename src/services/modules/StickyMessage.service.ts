@@ -9,20 +9,20 @@ import {
   Guild,
   StringSelectMenuBuilder,
   codeBlock,
-} from "discord.js";
+} from 'discord.js';
 import {
   GuildSettings,
   IButton,
   StickyMessage,
-} from "../../database/models/GuildSetting";
-import Deps from "../../utils/Deps";
-import RegisteringService from "../registering.service";
+} from '../../database/models/GuildSetting';
+import Deps from '../../utils/Deps';
+import RegisteringService from '../registering.service';
 
 export default class StickyMessagesModule extends RegisteringService {
   constructor() {
     super();
     this.client.on(
-      "interactionCreate",
+      'interactionCreate',
       async (interaction: any) => await this.onInteractionCreate(interaction)
     );
   }
@@ -44,7 +44,10 @@ export default class StickyMessagesModule extends RegisteringService {
       (await GuildSettings.create({ _id: guild.id }));
     const message = await channel.send({
       content: messageContent,
-      components: [this.getStickyMessageComponents()[0] as any, this.getStickyMessageComponents()[1]],
+      components: [
+        this.getStickyMessageComponents()[0] as any,
+        this.getStickyMessageComponents()[1],
+      ],
     });
     let StickyMessageData = new StickyMessage()
       .setChannelId(channel.id)
@@ -83,7 +86,7 @@ export default class StickyMessagesModule extends RegisteringService {
 
   async deleteStickyMessage(channelId: string) {
     const savedGuild = await GuildSettings.findOne({
-      "stickyMessages.channelId": channelId,
+      'stickyMessages.channelId': channelId,
     });
     if (savedGuild) {
       const index = savedGuild.stickyMessages.findIndex(
@@ -97,21 +100,21 @@ export default class StickyMessagesModule extends RegisteringService {
 
   public getStickyMessageComponents() {
     const selectMenu = new StringSelectMenuBuilder()
-      .setCustomId("this_is_setup_by_admins")
-      .setPlaceholder("This is setup by Server Admins")
+      .setCustomId('this_is_setup_by_admins')
+      .setPlaceholder('This is setup by Server Admins')
       .setDisabled(true)
-      .addOptions(
-        {
-          label: "test",
-          description: 'text',
-          value: 'testadmins1010lol'
-        }
-      );
+      .addOptions({
+        label: 'test',
+        description: 'text',
+        value: 'testadmins1010lol',
+      });
     const button = new ButtonBuilder()
-      .setCustomId("delete_sticky")
-      .setLabel("Delete Sticky Message")
+      .setCustomId('delete_sticky')
+      .setLabel('Delete Sticky Message')
       .setStyle(ButtonStyle.Danger);
-    const row1 = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu)
+    const row1 = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      selectMenu
+    );
     const row2 = new ActionRowBuilder().addComponents(button);
     return [row1, row2];
   }
@@ -160,13 +163,15 @@ export default class StickyMessagesModule extends RegisteringService {
     );
     if (!stickyMessage) return;
 
-    if (interaction.customId === "delete_sticky") {
+    if (interaction.customId === 'delete_sticky') {
       await interaction.message.delete();
       const index = savedGuild.stickyMessages.indexOf(stickyMessage);
       savedGuild.stickyMessages.splice(index, 1);
       await savedGuild.save();
-    } else if ( interaction.customId === "this_is_setup_by_admins" ) {
-      await interaction.followUp(`${codeBlock('YOUR NOT ALLOWED TO SEE THIS!')}`);
-    };
+    } else if (interaction.customId === 'this_is_setup_by_admins') {
+      await interaction.followUp(
+        `${codeBlock('YOUR NOT ALLOWED TO SEE THIS!')}`
+      );
+    }
   }
 }

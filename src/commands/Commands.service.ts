@@ -1,8 +1,8 @@
-import RegisteringService from "../services/registering.service";
-import fs from "fs";
-import Log from "../utils/Log";
-import { Message } from "discord.js";
-import { GuildSettings } from "../database/models/GuildSetting";
+import RegisteringService from '../services/registering.service';
+import fs from 'fs';
+import Log from '../utils/Log';
+import { Message } from 'discord.js';
+import { GuildSettings } from '../database/models/GuildSetting';
 
 export default class MessageCommandService extends RegisteringService {
   constructor() {
@@ -14,7 +14,7 @@ export default class MessageCommandService extends RegisteringService {
     fs.readdirSync(`${__dirname}/Message/`).forEach(async (dir) => {
       const commandFiles = fs
         .readdirSync(`${__dirname}/Message/${dir}/`)
-        .filter((file) => file.endsWith(".ts"));
+        .filter((file) => file.endsWith('.ts'));
 
       for (const file of commandFiles) {
         const command = await this.importFile(
@@ -33,6 +33,6 @@ export default class MessageCommandService extends RegisteringService {
   }
 
   public getCommandArgs(slicedContent: string) {
-    return slicedContent.split(" ").slice(1);
+    return slicedContent.split(' ').slice(1);
   }
 }

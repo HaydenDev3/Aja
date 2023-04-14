@@ -13,15 +13,15 @@ import {
   StringSelectMenuBuilder,
   StringSelectMenuInteraction,
   StringSelectMenuOptionBuilder,
-} from "discord.js";
-import config from "../../../utils/Config";
-import Command, { MessageCommandData } from "../../Command";
-import SlashCommand from "../../SlashCommand";
+} from 'discord.js';
+import config from '../../../utils/Config';
+import Command, { MessageCommandData } from '../../Command';
+import SlashCommand from '../../SlashCommand';
 
 export default new (class HelpCommand implements SlashCommand {
   data: SlashCommandBuilder = new SlashCommandBuilder()
-    .setName("help")
-    .setDescription("Recieve help upon using this command.")
+    .setName('help')
+    .setDescription('Recieve help upon using this command.')
     .setDMPermission(true);
 
   invoke = async (client: Client, interaction: ChatInputCommandInteraction) => {
@@ -37,7 +37,7 @@ export default new (class HelpCommand implements SlashCommand {
           return `\`${command.name}\` - Context`;
         } else return `</${command.name}:${command.id}>`;
       })
-      .join(", ");
+      .join(', ');
 
     const message = await interaction.followUp({
       embeds: [
@@ -64,8 +64,8 @@ export default new (class HelpCommand implements SlashCommand {
       components: [
         new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
           new StringSelectMenuBuilder()
-            .setCustomId("guide")
-            .setPlaceholder("Select a guide to start getting help!")
+            .setCustomId('guide')
+            .setPlaceholder('Select a guide to start getting help!')
             .setDisabled(false)
             .addOptions([
               new StringSelectMenuOptionBuilder()
@@ -84,10 +84,10 @@ export default new (class HelpCommand implements SlashCommand {
         new ActionRowBuilder<ButtonBuilder>().addComponents(
           new ButtonBuilder({
             type: 2,
-            label: "Hide Message",
-            customId: "hide_message",
+            label: 'Hide Message',
+            customId: 'hide_message',
             disabled: false,
-            emoji: "1008179260621590528",
+            emoji: '1008179260621590528',
             style: ButtonStyle.Secondary,
           })
         ),
@@ -95,7 +95,7 @@ export default new (class HelpCommand implements SlashCommand {
     });
 
     const filter = (i: MessageComponentInteraction) =>
-      i.customId === "guide" && i.isStringSelectMenu();
+      i.customId === 'guide' && i.isStringSelectMenu();
 
     const collector = message.createMessageComponentCollector({
       filter,
@@ -103,18 +103,18 @@ export default new (class HelpCommand implements SlashCommand {
     });
 
     collector.on(
-      "collect",
+      'collect',
       async (interaction: StringSelectMenuInteraction) => {
-        if (interaction.customId !== "guide") return;
+        if (interaction.customId !== 'guide') return;
 
         const [value] = interaction.values;
         switch (value) {
-          case "commands": {
+          case 'commands': {
             await message.edit({
               embeds: [
                 new EmbedBuilder()
                   .setThumbnail(
-                    "https://cdn.discordapp.com/emojis/1086196240208891944.webp?size=240&quality=lossless"
+                    'https://cdn.discordapp.com/emojis/1086196240208891944.webp?size=240&quality=lossless'
                   )
                   .setTitle(`Here's a guide for Commands`)
                   .setDescription(
@@ -125,12 +125,12 @@ export default new (class HelpCommand implements SlashCommand {
             });
             break;
           }
-          case "shields_guide": {
+          case 'shields_guide': {
             await message.edit({
               embeds: [
                 new EmbedBuilder()
                   .setThumbnail(
-                    "https://cdn.discordapp.com/emojis/1090080882091626577.webp?size=240&quality=lossless"
+                    'https://cdn.discordapp.com/emojis/1090080882091626577.webp?size=240&quality=lossless'
                   )
                   .setTitle(`What are Shields?`)
                   .setDescription(
@@ -145,10 +145,10 @@ export default new (class HelpCommand implements SlashCommand {
       }
     );
 
-    collector.on("end", async () => {
+    collector.on('end', async () => {
       await message.edit({
         content:
-          "Your session has expired, please reuse the command to get this again",
+          'Your session has expired, please reuse the command to get this again',
         embeds: [],
         components: [],
       });

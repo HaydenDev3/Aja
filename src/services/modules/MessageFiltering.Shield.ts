@@ -1,7 +1,7 @@
-import { Colors, EmbedBuilder, Message } from "discord.js";
-import { GuildSettings } from "../../database/models/GuildSetting";
-import { InfractionModel } from "../../database/models/Infraction";
-import RegisteringService from "../registering.service";
+import { Colors, EmbedBuilder, Message } from 'discord.js';
+import { GuildSettings } from '../../database/models/GuildSetting';
+import { InfractionModel } from '../../database/models/Infraction';
+import RegisteringService from '../registering.service';
 
 export default class MessageFiltering extends RegisteringService {
   constructor() {
@@ -21,12 +21,12 @@ export default class MessageFiltering extends RegisteringService {
 
     const action = messageFiltering.action;
     if (isFiltered()) {
-      if (action === "ban") {
-        await message.member?.ban({ reason: "Banned for Auto Moderation" });
+      if (action === 'ban') {
+        await message.member?.ban({ reason: 'Banned for Auto Moderation' });
         await message.member?.send({
           content: messageFiltering.banMessage,
         });
-      } else if (action === "warn") {
+      } else if (action === 'warn') {
         await message.delete().catch(() => {});
         const msg = await message.reply({
           content: messageFiltering.warningMessage,
@@ -35,7 +35,7 @@ export default class MessageFiltering extends RegisteringService {
         const newData = await InfractionModel.create({
           _id: message.guild.id,
           memberId: message.member?.id,
-          reason: "Warned for Auto Moderation",
+          reason: 'Warned for Auto Moderation',
           date: new Date(),
         });
         await newData.save();
@@ -43,8 +43,8 @@ export default class MessageFiltering extends RegisteringService {
         setTimeout(async () => {
           await msg.delete().catch(() => {});
         }, 5000);
-      } else if (action == "kick") {
-        await message.member?.kick("Banned for Auto Moderation");
+      } else if (action == 'kick') {
+        await message.member?.kick('Banned for Auto Moderation');
         await message.member?.send({
           content: messageFiltering.kickMessage,
         });

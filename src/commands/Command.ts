@@ -1,4 +1,4 @@
-import { PermissionFlags, PermissionsString } from "discord.js";
+import { PermissionFlags, PermissionsString } from 'discord.js';
 
 export type Permission = PermissionFlags | PermissionsString;
 

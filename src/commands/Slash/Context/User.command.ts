@@ -11,10 +11,10 @@ import {
   Role,
   User,
   UserContextMenuCommandInteraction,
-} from "discord.js";
-import Member from "../../../database/models/Member";
-import config from "../../../utils/Config";
-import SlashCommand from "../../SlashCommand";
+} from 'discord.js';
+import Member from '../../../database/models/Member';
+import config from '../../../utils/Config';
+import SlashCommand from '../../SlashCommand';
 
 const badges = {
   ActiveDeveloper: config.emojis.unicode.activedeveloper,
@@ -32,7 +32,7 @@ const badges = {
 
 export default new (class UserContextMenuCommand implements SlashCommand {
   data: ContextMenuCommandBuilder = new ContextMenuCommandBuilder()
-    .setName("User Information")
+    .setName('User Information')
     .setType(ApplicationCommandType.User);
 
   invoke = async (
@@ -45,7 +45,7 @@ export default new (class UserContextMenuCommand implements SlashCommand {
     const roleNames = member.roles?.cache
       .filter((role: Role) => role.id !== interaction.guild?.id)
       .map((role: Role) => role.name)
-      .join(", ");
+      .join(', ');
 
     const embeds = [
       new EmbedBuilder()
@@ -53,12 +53,12 @@ export default new (class UserContextMenuCommand implements SlashCommand {
         .setTitle(`User Information for ${user.tag}`)
         .addFields(
           {
-            name: "Username",
+            name: 'Username',
             value: user.username,
             inline: true,
           },
           {
-            name: "Discriminator",
+            name: 'Discriminator',
             value: user.discriminator,
             inline: true,
           }
@@ -68,8 +68,8 @@ export default new (class UserContextMenuCommand implements SlashCommand {
         .setColor(Colors.Blurple)
         .setTitle(`User Information for ${user.tag} (2)`)
         .addFields({
-          name: "Member Roles",
-          value: roleNames || "None",
+          name: 'Member Roles',
+          value: roleNames || 'None',
         })
         .setThumbnail(
           user.displayAvatarURL({ forceStatic: false, size: 2048 })
@@ -78,8 +78,8 @@ export default new (class UserContextMenuCommand implements SlashCommand {
 
     if (user.bot) {
       embeds[0].data.fields?.push({
-        name: "Bot",
-        value: user.bot ? "🤖 Yes" : "🙂 No",
+        name: 'Bot',
+        value: user.bot ? '🤖 Yes' : '🙂 No',
         inline: true,
       });
     }
@@ -90,15 +90,15 @@ export default new (class UserContextMenuCommand implements SlashCommand {
         .map(
           (flag) =>
             `> **${flag
-              .replace("HypeSquadOnlineHouse2", "HypeSquad Brilliance")
-              .replace("HypeSquadOnlineHouse3", "HypeSquad Bravey")
-              .replace("VerifiedDeveloper", "Bot Developer")
-              .replace("ActiveDeveloper", "Active Developer")}**`
+              .replace('HypeSquadOnlineHouse2', 'HypeSquad Brilliance')
+              .replace('HypeSquadOnlineHouse3', 'HypeSquad Bravey')
+              .replace('VerifiedDeveloper', 'Bot Developer')
+              .replace('ActiveDeveloper', 'Active Developer')}**`
         )
-        .join("\n");
+        .join('\n');
       embeds[0].data.fields?.push({
-        name: "Badges",
-        value: flagString || "None",
+        name: 'Badges',
+        value: flagString || 'None',
         inline: false,
       });
     }
@@ -113,15 +113,15 @@ export default new (class UserContextMenuCommand implements SlashCommand {
     let currentPage = 0;
 
     const previousButton = new ButtonBuilder()
-      .setCustomId("previous")
+      .setCustomId('previous')
       .setStyle(ButtonStyle.Primary)
-      .setLabel("Previous")
+      .setLabel('Previous')
       .setDisabled(true);
 
     const nextButton = new ButtonBuilder()
-      .setCustomId("next")
+      .setCustomId('next')
       .setStyle(ButtonStyle.Primary)
-      .setLabel("Next");
+      .setLabel('Next');
 
     const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
       previousButton,
@@ -130,8 +130,8 @@ export default new (class UserContextMenuCommand implements SlashCommand {
 
     const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId("like_button")
-        .setLabel("Like")
+        .setCustomId('like_button')
+        .setLabel('Like')
         .setStyle(ButtonStyle.Secondary)
     );
     const message = await interaction.followUp({
@@ -140,9 +140,9 @@ export default new (class UserContextMenuCommand implements SlashCommand {
     });
 
     const filter = (i: any) =>
-      i.customId === "previous_button" ||
-      i.customId === "next_button" ||
-      i.customId === "like_button";
+      i.customId === 'previous_button' ||
+      i.customId === 'next_button' ||
+      i.customId === 'like_button';
 
     const collector = message.createMessageComponentCollector({
       filter,
@@ -151,34 +151,34 @@ export default new (class UserContextMenuCommand implements SlashCommand {
 
     let index: number = 0;
 
-    collector.on("collect", async (i) => {
+    collector.on('collect', async (i) => {
       const savedMember = await Member.findOne({ _id: i.user.id });
       if (!savedMember) new Member({ _id: i.user.id });
 
-      if (i.customId === "previous_button") {
+      if (i.customId === 'previous_button') {
         if (index === 0) return;
         index--;
         await message.edit({
           embeds: [embeds[index]],
           components: [row1, row2],
         });
-      } else if (i.customId === "next_button") {
+      } else if (i.customId === 'next_button') {
         if (index === embeds.length - 1) return;
         index++;
         if (!embeds[index + 1]) {
-          embeds.push(new EmbedBuilder().setTitle("End"));
+          embeds.push(new EmbedBuilder().setTitle('End'));
         }
         await message.edit({
           embeds: [embeds[index]],
           components: [row1, row2],
         });
-      } else if (i.customId === "like_button") {
+      } else if (i.customId === 'like_button') {
         // Check if user already liked the target user
         const targetUser = user as User;
         const userLikes = await savedMember?.likes;
         if (userLikes?.includes(targetUser.id)) {
           await i.followUp({
-            content: "You already liked this user!",
+            content: 'You already liked this user!',
             ephemeral: true,
           });
           return;
@@ -195,7 +195,7 @@ export default new (class UserContextMenuCommand implements SlashCommand {
       }
     });
 
-    collector.on("end", async () => {
+    collector.on('end', async () => {
       await message.edit({ components: [] });
     });
   };

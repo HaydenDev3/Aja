@@ -1,18 +1,18 @@
-import { AttachmentBuilder, ButtonStyle, Client, Message } from "discord.js";
-import Command, { MessageCommandData } from "../../Command";
-import fs from "fs";
-import config from "../../../utils/Config";
+import { AttachmentBuilder, ButtonStyle, Client, Message } from 'discord.js';
+import Command, { MessageCommandData } from '../../Command';
+import fs from 'fs';
+import config from '../../../utils/Config';
 export default new (class HelpCommand implements Command {
   data: MessageCommandData = {
-    name: "help",
-    summary: "Recieve help upon using this command.",
+    name: 'help',
+    summary: 'Recieve help upon using this command.',
   };
 
   invoke = async (client: Client, message: Message) => {
     await message.channel.sendTyping().catch(() => {});
     const imageBuffer = fs.readFileSync(`${__dirname}/help_command.png`);
     const image = new AttachmentBuilder(imageBuffer, {
-      name: "help_command.png",
+      name: 'help_command.png',
     });
 
     await message.reply({
@@ -23,10 +23,10 @@ export default new (class HelpCommand implements Command {
           components: [
             {
               type: 2,
-              label: "Hide Message",
-              customId: "hide_message",
+              label: 'Hide Message',
+              customId: 'hide_message',
               disabled: false,
-              emoji: "1008179260621590528",
+              emoji: '1008179260621590528',
               style: ButtonStyle.Secondary,
             },
           ],

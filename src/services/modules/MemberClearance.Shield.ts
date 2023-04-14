@@ -8,10 +8,10 @@ import {
   Role,
   TextChannel,
   time,
-} from "discord.js";
-import moment from "moment";
-import { GuildSettings } from "../../database/models/GuildSetting";
-import RegisteringService from "../registering.service";
+} from 'discord.js';
+import moment from 'moment';
+import { GuildSettings } from '../../database/models/GuildSetting';
+import RegisteringService from '../registering.service';
 
 export default class MemberClearanceLog extends RegisteringService {
   constructor() {
@@ -28,10 +28,10 @@ export default class MemberClearanceLog extends RegisteringService {
       ? guildRoles.get(guildConfig?.botRole as string)
       : guildRoles.get(guildConfig?.memberRole as string);
 
-    if (!assignedRole) assignedRole = "None";
+    if (!assignedRole) assignedRole = 'None';
     else
       await member.roles.add(assignedRole).catch(() => {
-        assignedRole = "Failed due to role hieraracy";
+        assignedRole = 'Failed due to role hieraracy';
       });
 
     const LogChannel = (await member.guild.channels.fetch()).get(
@@ -40,26 +40,26 @@ export default class MemberClearanceLog extends RegisteringService {
     if (!LogChannel) return;
 
     let colour;
-    let risk = "Fairly Safe";
+    let risk = 'Fairly Safe';
 
     var accountCreation = parseInt(
       (member.user.createdTimestamp / 1000) as any
     );
     var joiningTime = parseInt(((member.joinedAt as any) / 1000) as any);
 
-    var monthsAgo = moment().subtract(2, "months").unix();
-    var weeksAgo = moment().subtract(2, "weeks").unix();
-    var daysAgo = moment().subtract(2, "days").unix();
+    var monthsAgo = moment().subtract(2, 'months').unix();
+    var weeksAgo = moment().subtract(2, 'weeks').unix();
+    var daysAgo = moment().subtract(2, 'days').unix();
 
     if (accountCreation >= monthsAgo) {
       colour = `${Colors.Blurple}`;
-      risk = "Low <:icons_Correct:1043319634776047667>";
+      risk = 'Low <:icons_Correct:1043319634776047667>';
     } else if (accountCreation >= weeksAgo) {
       colour = `${Colors.Yellow}`;
-      risk = "Medium :warn:";
+      risk = 'Medium :warn:';
     } else if (accountCreation >= daysAgo) {
       colour = `${Colors.Red}`;
-      risk = "Extreme <a:Alert:936155561878245397>";
+      risk = 'Extreme <a:Alert:936155561878245397>';
     }
 
     const embed = new EmbedBuilder()
@@ -71,7 +71,7 @@ export default class MemberClearanceLog extends RegisteringService {
       .setColor(colour || (Colors.Blurple as any))
       .setDescription(
         `> <:replycontinue:998771075427094539> ${
-          member.user.bot ? "Bot" : "User"
+          member.user.bot ? 'Bot' : 'User'
         } Account Type\n> <:replycontinue:998771075427094539> ${risk} Risk Level\n> <:replycontinue:998771075427094539> ${assignedRole} Role Assigned\n> <:replycontinue:998771075427094539> ${time(
           accountCreation
         )} Account Created\n> <:reply:878577643300204565> ${time(
@@ -79,10 +79,10 @@ export default class MemberClearanceLog extends RegisteringService {
         )} Account Joined`
       )
       .setThumbnail(member.user.displayAvatarURL())
-      .setFooter({ text: "Joined" })
+      .setFooter({ text: 'Joined' })
       .setTimestamp();
 
-    if (risk.includes("Extreme") || risk.includes("Medium")) {
+    if (risk.includes('Extreme') || risk.includes('Medium')) {
       const Buttons = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setStyle(ButtonStyle.Danger)

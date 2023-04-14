@@ -1,13 +1,13 @@
-import { Client, codeBlock, Message } from "discord.js";
-import config from "../../../utils/Config";
-import Log from "../../../utils/Log";
-import Command, { MessageCommandData } from "../../Command";
+import { Client, codeBlock, Message } from 'discord.js';
+import config from '../../../utils/Config';
+import Log from '../../../utils/Log';
+import Command, { MessageCommandData } from '../../Command';
 
 export default new (class EmitCommand implements Command {
   data: MessageCommandData = {
-    name: "emit",
+    name: 'emit',
     summary:
-      "Emit a custom event with specified parameters to trigger custom functionality.",
+      'Emit a custom event with specified parameters to trigger custom functionality.',
     permissions: [],
     cooldown: 5000,
   };
@@ -18,15 +18,15 @@ export default new (class EmitCommand implements Command {
     if (!config.discord.ownerIds.includes(message.author.id)) return;
     try {
       if (!message.guild) return;
-      client.emit("guildCreate", message.guild);
+      client.emit('guildCreate', message.guild);
       message.channel.send(
         `> ${config.emojis.unicode.correct} Successfully emitted event \`Guild Create\``
       );
     } catch (error: any) {
-      Log.fail(error.stack, "commands");
+      Log.fail(error.stack, 'commands');
       await message.channel.send(
         `> <a:Alert:936155561878245397> An Error was detected\n${codeBlock(
-          error.message ?? "Unknown Error"
+          error.message ?? 'Unknown Error'
         )}`
       );
     }

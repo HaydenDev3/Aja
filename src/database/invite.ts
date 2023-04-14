@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const InviteSchema = new mongoose.Schema({
   guild: {
@@ -29,6 +29,6 @@ export interface InviteDocument extends mongoose.Document {
 }
 
 export const SavedInvite = mongoose.model<InviteDocument>(
-  "invites",
+  'invites',
   InviteSchema
 );

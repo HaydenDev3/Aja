@@ -2,7 +2,7 @@ import {
   ApplicationCommandDataResolvable,
   ContextMenuCommandBuilder,
   SlashCommandBuilder,
-} from "discord.js";
+} from 'discord.js';
 
 export default interface SlashCommand {
   data:

@@ -6,10 +6,10 @@ import {
   Message,
   Role,
   TextChannel,
-} from "discord.js";
-import mongoose, { Schema, Document } from "mongoose";
-import { client } from "../../bot";
-import { Action } from "../Action";
+} from 'discord.js';
+import mongoose, { Schema, Document } from 'mongoose';
+import { client } from '../../bot';
+import { Action } from '../Action';
 
 export class Module {
   enabled: boolean;
@@ -20,7 +20,7 @@ export class Module {
 }
 
 export class StarboardModule extends Module {
-  channelId: string = "";
+  channelId: string = '';
   threshold: number = 2;
 }
 
@@ -40,10 +40,10 @@ export class StickyMessage extends Module {
 
   constructor() {
     super();
-    this.message = "";
-    this.content = "";
-    this.channelId = "";
-    this.messageId = "";
+    this.message = '';
+    this.content = '';
+    this.channelId = '';
+    this.messageId = '';
     this.buttons = [];
   }
 
@@ -88,9 +88,9 @@ export class SpamShield extends Module {
     this.warnThreshold = 0;
     this.kickThreshold = 0;
     this.banThreshold = 0;
-    this.warningMessage = "";
-    this.kickMessage = "";
-    this.banMessage = "";
+    this.warningMessage = '';
+    this.kickMessage = '';
+    this.banMessage = '';
     this.exemptRoles = [];
     this.exemptMembers = [];
   }
@@ -103,8 +103,8 @@ export class LeavingSettings extends Module {
 
   constructor() {
     super();
-    this.channel = "";
-    this.message = "";
+    this.channel = '';
+    this.message = '';
     this.embed = false;
   }
 }
@@ -115,8 +115,8 @@ export class GeneralModule extends Module {
 
   constructor() {
     super(true);
-    this.prefix = "!";
-    this.holdRoleId = "";
+    this.prefix = '!';
+    this.holdRoleId = '';
   }
 }
 
@@ -148,8 +148,8 @@ export class VerificationSettings extends Module {
   constructor() {
     super();
 
-    this.channel = "";
-    this.memberRole = "";
+    this.channel = '';
+    this.memberRole = '';
   }
 }
 
@@ -162,8 +162,8 @@ export class WelcomingSettings extends Module {
 
   constructor() {
     super();
-    this.message = "";
-    this.channel = "";
+    this.message = '';
+    this.channel = '';
     this.verification = new VerificationSettings();
     this.onboarding = new OnboardingModule();
     this.embed = false;
@@ -184,7 +184,7 @@ export class TicketingModule extends Module {
 
   constructor() {
     super();
-    this.transcriptChannel = "";
+    this.transcriptChannel = '';
     this.supportRoles = [];
     this.tickets = new Map();
   }
@@ -197,8 +197,8 @@ export class MemberRiskLogging extends Module {
 
   constructor() {
     super();
-    this.memberRole = "";
-    this.botRole = "";
+    this.memberRole = '';
+    this.botRole = '';
     this.actions = [];
   }
 }
@@ -209,10 +209,10 @@ export class MessageFilteringSettings extends Module {
   warnThreshold = 0;
   kickThreshold = 0;
   banThreshold = 0;
-  warningMessage = "Please refrain from using inappropriate language or links.";
-  kickMessage = "User kicked for using inappropriate language or links.";
-  banMessage = "User kicked for using inappropriate language or links.";
-  action: Action = "warn";
+  warningMessage = 'Please refrain from using inappropriate language or links.';
+  kickMessage = 'User kicked for using inappropriate language or links.';
+  banMessage = 'User kicked for using inappropriate language or links.';
+  action: Action = 'warn';
   exemptRoles: string[] = [];
   exemptMembers: string[] = [];
 }
@@ -225,20 +225,20 @@ export class RaidShieldModule extends Module {
 }
 
 export class LoggingModule extends Module {
-  channel = "";
+  channel = '';
   welcoming = new WelcomingSettings();
   leaving = new LeavingSettings();
   memberRiskLogging = new MemberRiskLogging();
 }
 
 export class ContentFiltering extends Module {
-  channel = "";
+  channel = '';
   messageFiltering = new MessageFilteringSettings();
   nicknameFiltering = new NicknameFiltering();
 }
 
 export class Shields extends Module {
-  channel = "";
+  channel = '';
   spamShield = new SpamShield();
   raidShield = new RaidShieldModule();
 }
@@ -261,10 +261,10 @@ export const guildSettingsSchema = new Schema<GuildSettingsDocument>({
   contentFiltering: { type: Object, default: new ContentFiltering() },
   ticketing: { type: Object, default: new TicketingModule() },
   stickyMessages: [{ type: Object, default: new StickyMessage() }],
-  starboard: { type: Object, default: new StarboardModule() }
+  starboard: { type: Object, default: new StarboardModule() },
 });
 
 export const GuildSettings = mongoose.model<GuildSettingsDocument>(
-  "guilds",
+  'guilds',
   guildSettingsSchema
 );

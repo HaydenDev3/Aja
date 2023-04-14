@@ -14,15 +14,15 @@ import {
   SlashCommandBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
-} from "discord.js";
-import { GuildSettings } from "../../../database/models/GuildSetting";
-import config from "../../../utils/Config";
-import Log from "../../../utils/Log";
-import SlashCommand from "../../SlashCommand";
+} from 'discord.js';
+import { GuildSettings } from '../../../database/models/GuildSetting';
+import config from '../../../utils/Config';
+import Log from '../../../utils/Log';
+import SlashCommand from '../../SlashCommand';
 
 export default new (class ConfigCommand implements SlashCommand {
   data: SlashCommandBuilder = new SlashCommandBuilder()
-    .setName("config")
+    .setName('config')
     .setDescription("Indoor your server's journey...")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDMPermission(false)
@@ -43,37 +43,37 @@ export default new (class ConfigCommand implements SlashCommand {
     const components = [
       new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
-          .setLabel("Save Data")
+          .setLabel('Save Data')
           .setEmoji(config.emojis.id.edit)
-          .setCustomId("save_guild_data")
+          .setCustomId('save_guild_data')
           .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
-          .setLabel("Export Data")
+          .setLabel('Export Data')
           .setEmoji(config.emojis.id.files)
-          .setCustomId("export_guild_data")
+          .setCustomId('export_guild_data')
           .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
-          .setLabel("Exit Menu")
+          .setLabel('Exit Menu')
           .setEmoji(config.emojis.id.warning)
-          .setCustomId("exit")
+          .setCustomId('exit')
           .setStyle(ButtonStyle.Secondary)
       ),
       new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
         new StringSelectMenuBuilder()
-          .setCustomId("config")
+          .setCustomId('config')
           .setPlaceholder(`Select something you want to configure below`)
           .addOptions([
             new StringSelectMenuOptionBuilder()
               .setLabel(`Prefix`)
-              .setValue("prefix")
-              .setDescription("Edit the guilds prefix")
+              .setValue('prefix')
+              .setDescription('Edit the guilds prefix')
               .setEmoji(config.emojis.id.generalinfo)
               .setDefault(true),
             new StringSelectMenuOptionBuilder()
               .setLabel(`Hold Role`)
-              .setValue("holdRole")
+              .setValue('holdRole')
               .setEmoji(config.emojis.id.spark)
-              .setDescription("Edit the guilds hold role (security")
+              .setDescription('Edit the guilds hold role (security')
               .setDefault(false),
           ])
       ),
@@ -82,13 +82,13 @@ export default new (class ConfigCommand implements SlashCommand {
           .setStyle(ButtonStyle.Primary)
           .setLabel(`Previous`)
           .setDisabled(false)
-          .setCustomId("previous")
+          .setCustomId('previous')
           .setEmoji(config.emojis.id.leftarrow),
         new ButtonBuilder()
           .setStyle(ButtonStyle.Primary)
           .setLabel(`Next`)
           .setDisabled(false)
-          .setCustomId("next")
+          .setCustomId('next')
           .setEmoji(config.emojis.id.rightarrow)
       ),
     ];
@@ -106,7 +106,7 @@ export default new (class ConfigCommand implements SlashCommand {
       embeds: [
         new EmbedBuilder()
           .setThumbnail(
-            "https://cdn.discordapp.com/emojis/859388128040976384.webp?size=240&quality=lossless"
+            'https://cdn.discordapp.com/emojis/859388128040976384.webp?size=240&quality=lossless'
           )
           .setTitle(`Loading settings...`)
           .setDescription(
@@ -126,7 +126,7 @@ export default new (class ConfigCommand implements SlashCommand {
     var embeds: EmbedBuilder[] = [
       new EmbedBuilder()
         .setThumbnail(
-          "https://cdn.discordapp.com/emojis/866599434098835486.webp?size=96&quality=lossless"
+          'https://cdn.discordapp.com/emojis/866599434098835486.webp?size=96&quality=lossless'
         )
         .setTitle(`General Module Settings`)
         .setDescription(
@@ -141,7 +141,7 @@ export default new (class ConfigCommand implements SlashCommand {
           }\` Prefix\n> ${config.emojis.unicode.shine} \`${
             interaction.guild?.roles.cache.get(
               savedGuild.general.holdRoleId as string
-            ) || "None"
+            ) || 'None'
           }\` Hold Role (Security)`
         )
         .setColor(Colors.Blurple)
@@ -154,7 +154,7 @@ export default new (class ConfigCommand implements SlashCommand {
         .setTimestamp(new Date()),
       new EmbedBuilder()
         .setThumbnail(
-          "https://cdn.discordapp.com/emojis/1090144515580510291.webp?size=240&quality=lossless"
+          'https://cdn.discordapp.com/emojis/1090144515580510291.webp?size=240&quality=lossless'
         )
         .setTitle(`Logging Module Settings`)
 
@@ -163,7 +163,7 @@ export default new (class ConfigCommand implements SlashCommand {
             config.emojis.unicode.shine
           }\n\n> ${config.emojis.unicode.textChannel} ${
             interaction.guild?.channels.cache.get(savedGuild.logging.channel)
-              ?.name || "No Logging Channel"
+              ?.name || 'No Logging Channel'
           }\n> ${
             savedGuild.logging.enabled
               ? config.emojis.unicode.on
@@ -192,7 +192,7 @@ export default new (class ConfigCommand implements SlashCommand {
         .setTimestamp(new Date()),
       new EmbedBuilder()
         .setThumbnail(
-          "https://cdn.discordapp.com/emojis/860133545884123136.webp?size=240&quality=lossless"
+          'https://cdn.discordapp.com/emojis/860133545884123136.webp?size=240&quality=lossless'
         )
         .setTitle(`Shields Module Settings`)
         .setDescription(
@@ -200,7 +200,7 @@ export default new (class ConfigCommand implements SlashCommand {
             config.emojis.unicode.shine
           }\n\n> ${config.emojis.unicode.textChannel} ${
             interaction.guild?.channels.cache.get(savedGuild.shields.channel)
-              ?.name || "No Logging Channel"
+              ?.name || 'No Logging Channel'
           }\n> ${
             savedGuild.shields.enabled
               ? config.emojis.unicode.on
@@ -225,16 +225,16 @@ export default new (class ConfigCommand implements SlashCommand {
         .setTimestamp(new Date()),
       new EmbedBuilder()
         .setThumbnail(
-          "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
+          'https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless'
         )
-        .setTitle("Content Filtering Settings")
+        .setTitle('Content Filtering Settings')
         .setDescription(
           `> ***START EDITING THE CONTENT FILTERING MODULE BY SELECTING SOMETHING BELOW*** ${
             config.emojis.unicode.shine
           }\n\n> ${config.emojis.unicode.textChannel} ${
             interaction.guild?.channels.cache.get(
               savedGuild.contentFiltering.channel
-            )?.name || "No Logging Channel"
+            )?.name || 'No Logging Channel'
           }\n> ${
             savedGuild.contentFiltering.enabled
               ? config.emojis.unicode.on
@@ -259,9 +259,9 @@ export default new (class ConfigCommand implements SlashCommand {
         .setTimestamp(new Date()),
       new EmbedBuilder()
         .setThumbnail(
-          "https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless"
+          'https://cdn.discordapp.com/emojis/860123644545204234.webp?size=240&quality=lossless'
         )
-        .setTitle("Ticketing Settings")
+        .setTitle('Ticketing Settings')
         .setDescription(
           `> ***START EDITING THE TICKETING MODULE BY SELECTING SOMETHING BELOW*** ${
             config.emojis.unicode.shine
@@ -272,7 +272,7 @@ export default new (class ConfigCommand implements SlashCommand {
           } Toggle\n> ${config.emojis.unicode.textChannel} ${
             interaction.guild?.channels.cache.get(
               savedGuild.ticketing.transcriptChannel
-            )?.name || "No Transcript Channel"
+            )?.name || 'No Transcript Channel'
           }\n> ${config.emojis.unicode.support} \`${
             savedGuild.ticketing.supportRoles.length
           }\` Support Roles\n> ${config.emojis.unicode.generalinfo} \`${
@@ -301,10 +301,10 @@ export default new (class ConfigCommand implements SlashCommand {
     }
 
     const filter = (i: any) =>
-      i.customId === "previous" ||
-      i.customId === "next" ||
-      i.customId === "export_guild_data" ||
-      i.customId === "save_guild_data";
+      i.customId === 'previous' ||
+      i.customId === 'next' ||
+      i.customId === 'export_guild_data' ||
+      i.customId === 'save_guild_data';
 
     const collector = message.createMessageComponentCollector({
       filter,
@@ -319,22 +319,22 @@ export default new (class ConfigCommand implements SlashCommand {
         });
       }, 3000);
 
-      collector.on("collect", async (i) => {
-        if (i.customId === "previous") {
+      collector.on('collect', async (i) => {
+        if (i.customId === 'previous') {
           if (index === 0) return;
           index--;
           await i.update({
             embeds: [embeds[index]],
             components,
           });
-        } else if (i.customId === "next") {
+        } else if (i.customId === 'next') {
           if (index === embeds.length - 1) return;
           index++;
           await i.update({
             embeds: [embeds[index]],
             components,
           });
-        } else if (i.customId === "export_guild_data") {
+        } else if (i.customId === 'export_guild_data') {
           const data = savedGuild?.toJSON();
           const jsonData = JSON.stringify(data);
 
@@ -343,11 +343,11 @@ export default new (class ConfigCommand implements SlashCommand {
           });
 
           await interaction.followUp({
-            content: "Here is the guild data.",
+            content: 'Here is the guild data.',
             files: [attachment],
             ephemeral: true,
           });
-        } else if (i.customId == "save_guild_data") {
+        } else if (i.customId == 'save_guild_data') {
           await savedGuild.save()?.catch(() => {});
           await interaction.followUp({
             content: `${config.emojis.unicode.correct} Successfully saved your data.`,
@@ -356,11 +356,11 @@ export default new (class ConfigCommand implements SlashCommand {
         }
       });
 
-      collector.on("end", async () => {
+      collector.on('end', async () => {
         await message.edit({ components: [] });
       });
     } catch (err) {
-      Log.fail(err, "commands");
+      Log.fail(err, 'commands');
     }
   };
 })();

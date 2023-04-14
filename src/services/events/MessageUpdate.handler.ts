@@ -1,13 +1,13 @@
-import { Client, ClientEvents, Message } from "discord.js";
-import MessageCommandService from "../../commands/Commands.service";
-import { GuildSettings } from "../../database/models/GuildSetting";
-import Deps from "../../utils/Deps";
-import Log from "../../utils/Log";
-import { EventType, IEvent } from "../events.service";
-import MessageFiltering from "../modules/MessageFiltering.Shield";
+import { Client, ClientEvents, Message } from 'discord.js';
+import MessageCommandService from '../../commands/Commands.service';
+import { GuildSettings } from '../../database/models/GuildSetting';
+import Deps from '../../utils/Deps';
+import Log from '../../utils/Log';
+import { EventType, IEvent } from '../events.service';
+import MessageFiltering from '../modules/MessageFiltering.Shield';
 
 export default new (class MessageCreateHandler implements IEvent {
-  on: keyof ClientEvents = "messageUpdate";
+  on: keyof ClientEvents = 'messageUpdate';
   type: EventType = 2;
 
   constructor(
@@ -30,7 +30,7 @@ export default new (class MessageCreateHandler implements IEvent {
 
       if (oldMessage.content === newMessage.content) return;
       const isCommand = () =>
-        newMessage.content.startsWith(savedGuild.general.prefix || "!");
+        newMessage.content.startsWith(savedGuild.general.prefix || '!');
 
       if (isCommand()) {
         const args = newMessage.content
@@ -55,7 +55,7 @@ export default new (class MessageCreateHandler implements IEvent {
         await this.messageFiltering.init(newMessage);
       }
     } catch (err: any) {
-      Log.fail(err.message, "commands");
+      Log.fail(err.message, 'commands');
     }
   };
 })();

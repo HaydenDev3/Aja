@@ -1,13 +1,13 @@
-import { Client, ClientEvents, Message } from "discord.js";
-import MessageCommandService from "../../commands/Commands.service";
-import { GuildSettings } from "../../database/models/GuildSetting";
-import Deps from "../../utils/Deps";
-import Log from "../../utils/Log";
-import { EventType, IEvent } from "../events.service";
-import MessageFiltering from "../modules/MessageFiltering.Shield";
+import { Client, ClientEvents, Message } from 'discord.js';
+import MessageCommandService from '../../commands/Commands.service';
+import { GuildSettings } from '../../database/models/GuildSetting';
+import Deps from '../../utils/Deps';
+import Log from '../../utils/Log';
+import { EventType, IEvent } from '../events.service';
+import MessageFiltering from '../modules/MessageFiltering.Shield';
 
 export default new (class MessageCreateHandler implements IEvent {
-  on: keyof ClientEvents = "messageCreate";
+  on: keyof ClientEvents = 'messageCreate';
   type: EventType = 2;
 
   constructor(
@@ -29,7 +29,7 @@ export default new (class MessageCreateHandler implements IEvent {
         new GuildSettings({ _id: message.guild.id });
 
       const isCommand = () =>
-        message.content.startsWith(savedGuild.general.prefix || "!");
+        message.content.startsWith(savedGuild.general.prefix || '!');
 
       if (isCommand()) {
         const args = message.content
@@ -54,7 +54,7 @@ export default new (class MessageCreateHandler implements IEvent {
         await this.messageFiltering.init(message);
       }
     } catch (err: any) {
-      Log.fail(err.message, "commands");
+      Log.fail(err.message, 'commands');
     }
   };
 })();

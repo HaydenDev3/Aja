@@ -1,4 +1,4 @@
-import "colors";
+import 'colors';
 
 export default class Log {
   private static formatTime(date: Date) {
@@ -6,7 +6,7 @@ export default class Log {
   }
 
   private static getSource(src?: string) {
-    return src?.toUpperCase() || "BOT";
+    return src?.toUpperCase() || 'BOT';
   }
 
   static info(message: string, src?: string) {
@@ -24,7 +24,7 @@ export default class Log {
       String(
         `[${this.formatTime(new Date())}] FAILED LAUNCH [${this.getSource(
           src
-        )}] ${error.message || error || "unknown error"}`
+        )}] ${error.message || error || 'unknown error'}`
       ).grey.bgRed.bold
     );
   }

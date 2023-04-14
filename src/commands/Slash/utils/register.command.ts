@@ -10,17 +10,17 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
   Snowflake,
-} from "discord.js";
-import { GuildSettings } from "../../../database/models/GuildSetting";
-import config from "../../../utils/Config";
-import Command, { MessageCommandData } from "../../Command";
-import SlashCommand from "../../SlashCommand";
+} from 'discord.js';
+import { GuildSettings } from '../../../database/models/GuildSetting';
+import config from '../../../utils/Config';
+import Command, { MessageCommandData } from '../../Command';
+import SlashCommand from '../../SlashCommand';
 
 export default new (class HelpCommand implements SlashCommand {
   data: SlashCommandBuilder = new SlashCommandBuilder()
-    .setName("register")
+    .setName('register')
     .setDescription(
-      "Register your server into our databases to indoor your servers security."
+      'Register your server into our databases to indoor your servers security.'
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
@@ -35,21 +35,21 @@ export default new (class HelpCommand implements SlashCommand {
     }
 
     const embed = new EmbedBuilder({
-      title: "Confirm Server Registration",
+      title: 'Confirm Server Registration',
       description: `Are you sure you want to register **${interaction.guild?.name}**?`,
       color: Colors.Blurple,
     });
 
     const buttonRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder({
-        customId: "register_yes",
-        label: "Yes",
+        customId: 'register_yes',
+        label: 'Yes',
         style: ButtonStyle.Success,
         emoji: config.emojis.id.correct,
       }),
       new ButtonBuilder({
-        customId: "register_no",
-        label: "No",
+        customId: 'register_no',
+        label: 'No',
         style: ButtonStyle.Danger,
         emoji: config.emojis.id.wrong,
       })
@@ -63,14 +63,14 @@ export default new (class HelpCommand implements SlashCommand {
     });
 
     const filter = (i: any) =>
-      i.customId === "register_yes" || i.customId === "register_no";
+      i.customId === 'register_yes' || i.customId === 'register_no';
     const collector = await message.createMessageComponentCollector({
       filter,
       time: 10000,
     });
 
-    collector.on("collect", async (i) => {
-      if (i.customId === "register_yes") {
+    collector.on('collect', async (i) => {
+      if (i.customId === 'register_yes') {
         if (savedGuild) {
           await message.edit({
             content: `> ${config.emojis.unicode.wrong} **${message.guild?.name}** already exists within the *database**.`,
@@ -94,7 +94,7 @@ export default new (class HelpCommand implements SlashCommand {
       }
     });
 
-    collector.on("end", async () => {
+    collector.on('end', async () => {
       if (!(await message)) {
         await message.edit({
           components: [],

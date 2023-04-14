@@ -10,14 +10,14 @@ import {
   EmbedBuilder,
   Guild,
   TextChannel,
-} from "discord.js";
-import { GuildSettings } from "../../database/models/GuildSetting";
-import config from "../../utils/Config";
-import Deps from "../../utils/Deps";
-import { EventType, IEvent } from "../events.service";
+} from 'discord.js';
+import { GuildSettings } from '../../database/models/GuildSetting';
+import config from '../../utils/Config';
+import Deps from '../../utils/Deps';
+import { EventType, IEvent } from '../events.service';
 
 export default new (class GuildCreateHandler implements IEvent {
-  on: keyof ClientEvents = "guildCreate";
+  on: keyof ClientEvents = 'guildCreate';
   type: EventType = 2;
 
   constructor(private client: Client = Deps.get<Client>(Client)) {}
@@ -33,37 +33,37 @@ export default new (class GuildCreateHandler implements IEvent {
       )
       .addFields([
         {
-          name: "Owner",
+          name: 'Owner',
           value:
             `> ${config.emojis.unicode.person} ${
               guild.members.cache.get(guild.ownerId)?.user.tag
-            }` || "Unknown",
+            }` || 'Unknown',
           inline: true,
         },
         {
-          name: "Members",
+          name: 'Members',
           value: `> ${config.emojis.unicode.person} ${guild.memberCount}`,
           inline: true,
         },
         {
-          name: "Created At",
+          name: 'Created At',
           value: `${guild.createdAt.toLocaleDateString()}`,
           inline: true,
         },
         {
-          name: "Verification Level",
+          name: 'Verification Level',
           value: `> ${config.emojis.unicode.vip} ${guild.verificationLevel
             .toString()
             .toUpperCase()}`,
           inline: true,
         },
         {
-          name: "Roles",
+          name: 'Roles',
           value: `> ${config.emojis.unicode.vip} ${guild.roles.cache.size}`,
           inline: true,
         },
         {
-          name: "Channels",
+          name: 'Channels',
           value: `> ${config.emojis.unicode.textChannel} ${guild.channels.cache.size}`,
           inline: true,
         },
@@ -74,28 +74,28 @@ export default new (class GuildCreateHandler implements IEvent {
     ) as TextChannel;
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId("leave_guild")
-        .setLabel("Leave Guild")
+        .setCustomId('leave_guild')
+        .setLabel('Leave Guild')
         .setEmoji(config.emojis.id.wrong)
         .setStyle(ButtonStyle.Danger),
       new ButtonBuilder()
-        .setCustomId("delete_guild_data")
-        .setLabel("Delete Guild Data")
+        .setCustomId('delete_guild_data')
+        .setLabel('Delete Guild Data')
         .setEmoji(config.emojis.id.wrong)
         .setStyle(ButtonStyle.Danger),
       new ButtonBuilder()
-        .setCustomId("create_guild_data")
-        .setLabel("Create Guild Data")
+        .setCustomId('create_guild_data')
+        .setLabel('Create Guild Data')
         .setEmoji(config.emojis.id.correct)
         .setStyle(ButtonStyle.Success),
       new ButtonBuilder()
-        .setCustomId("export_guild_data")
-        .setLabel("Export Guild Data")
+        .setCustomId('export_guild_data')
+        .setLabel('Export Guild Data')
         .setEmoji(config.emojis.id.files)
         .setStyle(ButtonStyle.Primary),
       new ButtonBuilder()
-        .setCustomId("exit")
-        .setLabel("Exit Menu")
+        .setCustomId('exit')
+        .setLabel('Exit Menu')
         .setEmoji(config.emojis.id.wrong)
         .setStyle(ButtonStyle.Primary)
     );
@@ -112,14 +112,14 @@ export default new (class GuildCreateHandler implements IEvent {
       time: 60000,
     });
 
-    collector.on("collect", async (interaction: ButtonInteraction) => {
+    collector.on('collect', async (interaction: ButtonInteraction) => {
       let savedGuild = await GuildSettings.findOne({ _id: guild.id });
-      if (interaction.customId === "leave_guild") {
+      if (interaction.customId === 'leave_guild') {
         if (!interaction.deferred)
           await interaction.deferReply({ ephemeral: true }).catch(() => {});
         await guild.leave();
-        await interaction.followUp("Left the guild.");
-      } else if (interaction.customId === "delete_guild_data") {
+        await interaction.followUp('Left the guild.');
+      } else if (interaction.customId === 'delete_guild_data') {
         if (!interaction.deferred)
           await interaction.deferReply({ ephemeral: true }).catch(() => {});
         if (!savedGuild) {
@@ -128,10 +128,10 @@ export default new (class GuildCreateHandler implements IEvent {
           if (!interaction.deferred)
             await interaction.deferReply({ ephemeral: true }).catch(() => {});
           await GuildSettings.deleteOne({ _id: guild.id });
-          await interaction.followUp("Deleted guild data.");
+          await interaction.followUp('Deleted guild data.');
           return;
         }
-      } else if (interaction.customId === "create_guild_data") {
+      } else if (interaction.customId === 'create_guild_data') {
         if (!interaction.deferred)
           await interaction.deferReply({ ephemeral: true }).catch(() => {});
         if (!savedGuild) {
@@ -139,10 +139,10 @@ export default new (class GuildCreateHandler implements IEvent {
           await savedGuild.save();
         } else savedGuild.toJSON();
         await interaction.followUp({
-          content: "Created guild data.",
+          content: 'Created guild data.',
           ephemeral: true,
         });
-      } else if (interaction.customId === "export_guild_data") {
+      } else if (interaction.customId === 'export_guild_data') {
         savedGuild = await GuildSettings.findOne({ _id: guild.id });
         if (!savedGuild) {
           await interaction.followUp({
@@ -161,9 +161,9 @@ export default new (class GuildCreateHandler implements IEvent {
 
         await interaction.followUp({
           files: [attachment],
-          content: "Here is the guild data.",
+          content: 'Here is the guild data.',
         });
-      } else if (interaction.customId === "exit") {
+      } else if (interaction.customId === 'exit') {
         savedGuild = await GuildSettings.findOne({ _id: guild.id });
         if (!savedGuild) {
           await interaction.followUp({
@@ -182,7 +182,7 @@ export default new (class GuildCreateHandler implements IEvent {
       }
     });
 
-    collector.on("end", async () => {
+    collector.on('end', async () => {
       await message.edit({ components: [] });
     });
   };

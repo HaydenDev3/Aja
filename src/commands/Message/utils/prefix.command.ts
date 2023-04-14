@@ -1,14 +1,14 @@
-import { ButtonStyle, Client, Message, PermissionFlagsBits } from "discord.js";
-import { GuildSettings } from "../../../database/models/GuildSetting";
-import config from "../../../utils/Config";
-import Command, { MessageCommandData } from "../../Command";
+import { ButtonStyle, Client, Message, PermissionFlagsBits } from 'discord.js';
+import { GuildSettings } from '../../../database/models/GuildSetting';
+import config from '../../../utils/Config';
+import Command, { MessageCommandData } from '../../Command';
 
 export default new (class HelpCommand implements Command {
   data: MessageCommandData = {
-    name: "prefix",
+    name: 'prefix',
     summary:
       "This command allows the server manager to set a custom prefix for the bot's commands within a Discord server, providing flexibility and customization options for the server's users..",
-    permissions: ["ManageGuild"],
+    permissions: ['ManageGuild'],
   };
 
   invoke = async (client: Client, message: Message) => {

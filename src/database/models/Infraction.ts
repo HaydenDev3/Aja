@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface Infraction {
   guildId: string;
@@ -22,6 +22,6 @@ const InfractionSchema = new mongoose.Schema<InfractionDocument>({
 });
 
 export const InfractionModel = mongoose.model<InfractionDocument>(
-  "infractions",
+  'infractions',
   InfractionSchema
 );
