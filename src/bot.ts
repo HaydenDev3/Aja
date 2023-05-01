@@ -9,6 +9,7 @@ import Deps from './utils/Deps';
 import config from './utils/Config';
 import EventsRegistery from './services/events.service';
 import mongoose from 'mongoose';
+import { IcreateAutoModRule, Salt } from '@antibot/salt';
 
 export const client: Client = Deps.add<Client>(
   Client,
@@ -21,6 +22,8 @@ export const client: Client = Deps.add<Client>(
     ],
   })
 );
+
+export const salt: Salt = new Salt(config.discord.token);
 
 mongoose.connect(config.database.uri, config.database.options);
 
